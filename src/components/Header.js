@@ -7,9 +7,9 @@ import { BiUserCircle } from "react-icons/bi";
 
 const Header = () => {
   return (
-    <div className="w-[100vw]">
-      <div className="flex px-4 py-1 items-center w-[100vw] ">
-        <div className="flex items-center flex-1">
+    <div className="w-[100vw] ">
+      <div className="flex px-4 py-1 items-center w-[100vw] h-[80px] ">
+        <div className="flex items-center ">
           <div>
             <img className="h-12 w-12" src={Logo} />
           </div>
@@ -30,21 +30,21 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <div className="w-full flex-2">
+        <div className="flex-auto">
           <Search />
         </div>
-        <div className="flex items-center justify-between flex-1">
+        <div className="flex items-center justify-end gap-3 mx-2">
           <div>
-            <BsFillBellFill />
+            <BsFillBellFill size={24} />
           </div>
           <div>
-            <AiFillMessage />
+            <AiFillMessage size={24} />
           </div>
           <div>
-            <BiUserCircle />
+            <BiUserCircle size={24} />
           </div>
           <div>
-            <AiFillCaretDown />
+            <AiFillCaretDown size={24} />
           </div>
         </div>
       </div>
