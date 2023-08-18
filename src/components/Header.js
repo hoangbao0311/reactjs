@@ -17,7 +17,7 @@ const Header = () => {
           <div>
             <Link
               className="h-12 min-w-[60px] px-4 font-bold bg-black text-white rounded-3xl py-3 flex items-center justify-center"
-              to="/home"
+              to="/"
             >
               Trang Chủ{" "}
             </Link>
