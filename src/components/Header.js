@@ -44,6 +44,8 @@ const Header = () => {
           <div>
             <BiUserCircle size={24} />
           </div>
+          <Link to="/login">Dang Nhap</Link>
+          <Link to="/register">Dang ky</Link>
           <div>
             <AiFillCaretDown size={24} />
           </div>
