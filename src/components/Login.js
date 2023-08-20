@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import New from "./New";
-import { useNavigate } from "react-router-dom";
 
 let url = "http://localhost:3004/user";
 
 const Login = () => {
   const email = "";
   const password = "";
-  const navigate = useNavigate();
   const [useEmail, setEmail] = useState("");
   const [usePassword, setPassword] = useState("");
+  const isLogin = "1";
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -34,18 +32,19 @@ const Login = () => {
           const email = user.email;
           const password = user.password;
 
-          // In ra email và password
-          console.log(`Email: ${email}, Password: ${password}`);
-
-          if (email == useEmail && password == usePassword) {
+          if (email === useEmail && password === usePassword) {
             isLoggedIn = true;
+            console.log(email);
+            localStorage.setItem("isLogin", email);
           }
         });
+
+        console.log(email);
 
         if (isLoggedIn) {
           alert("Dang nhap thanh cong");
           //   Chuyển trang khi login thành công
-          navigate("/");
+          window.location.href = "/";
         } else {
           alert("Nhap sai");
         }
