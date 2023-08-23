@@ -1,7 +1,7 @@
 import React from "react";
-import css from "./Home.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Masonry from "react-layout-masonry";
 
 const Home = () => {
   const [list, setList] = useState([]);
@@ -16,15 +16,13 @@ const Home = () => {
     getData();
   }, []);
   return (
-    <div id="columns">
+    <Masonry columns={6} gap={8}>
       {list.map((item) => (
         <div key={item.id}>
-          <figure>
-            <img src={item.image} />
-          </figure>
+          <img src={item.image} />
         </div>
       ))}
-    </div>
+    </Masonry>
   );
 };
 
