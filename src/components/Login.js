@@ -72,7 +72,6 @@ const Login = () => {
           <div>Email</div>
           <input
             value={useEmail}
-            s
             onChange={handleEmailChange}
             className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
             type="text"
