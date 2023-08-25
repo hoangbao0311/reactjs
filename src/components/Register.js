@@ -31,15 +31,40 @@ const Register = () => {
       password: usePassword,
     };
 
+    let trueEmail = false;
+
     axios
-      .post("http://localhost:3004/user", data)
+      .get("http://localhost:3004/user")
       .then((response) => {
-        alert("Đăng ký thành công:", response.data);
-        localStorage.setItem("isLogin", useEmail);
-        window.location.href = "/";
+        // Lặp qua từng đối tượng trong mảng data và lấy email và password
+        // Kiểm tra có trùng email có trong data chưa
+        response.data.forEach((user) => {
+          const email = user.email;
+          console.log(email);
+          if (useEmail === email) {
+            alert("Thông tin trùng");
+            trueEmail = false;
+          } else {
+            trueEmail = true;
+          }
+        });
+
+        // Đăng ký thành công khi thông tin không trùng
+        if (trueEmail) {
+          axios
+            .post("http://localhost:3004/user", data)
+            .then((response) => {
+              alert("Đăng ký thành công:", response.data);
+              localStorage.setItem("isLogin", data.email);
+              window.location.href = "/";
+            })
+            .catch((error) => {
+              console.error("Lỗi đăng ký:", error);
+            });
+        }
       })
       .catch((error) => {
-        console.error("Lỗi đăng ký:", error);
+        console.error("Lỗi khi gửi yêu cầu GET ", error);
       });
   };
 
@@ -76,7 +101,7 @@ const Register = () => {
             type="password"
             placeholder="Mật khẩu"
           />
-        </div>{" "}
+        </div>
         <div>
           <div>Nhập lại mật khẩu</div>
           <input

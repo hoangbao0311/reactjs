@@ -14,7 +14,24 @@ export const User = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [list]);
+
+  const handleEdit = (id) => {
+    // Implement your edit logic here
+    console.log("Edit user with ID:", id);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:3004/user/${id}`);
+      if (response.status === 200) {
+        console.log("User deleted successfully");
+        getData();
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
 
   return (
     <div>
@@ -42,10 +59,16 @@ export const User = () => {
           <p className="flex-1 py-2 flex items-center border-l-[1px] border-stone-300 px-4">
             {item.password}
           </p>
-          <p className=" py-2 flex items-center pr-4 bg-cyan-400 text-white px-4 rounded-md m-2">
+          <p
+            onClick={() => handleEdit(item.id)}
+            className=" py-2 flex items-center pr-4 bg-cyan-400 text-white px-4 rounded-md m-2 cursor-pointer hover:bg-cyan-500"
+          >
             Edit
           </p>
-          <p className=" py-2 flex items-center pr-4 bg-red-700 text-white px-4 rounded-md m-2">
+          <p
+            onClick={() => handleDelete(item.id)}
+            className=" py-2 flex items-center pr-4 bg-red-700 text-white px-4 rounded-md m-2 cursor-pointer hover:bg-red-800"
+          >
             Delete
           </p>
         </div>

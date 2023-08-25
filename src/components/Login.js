@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-let url = "http://localhost:3004/user";
+// let url = "http://localhost:3004/user";
 
 const Login = () => {
   const email = "";
@@ -22,24 +22,21 @@ const Login = () => {
     let isLoggedIn = false;
 
     axios
-      .get(url)
+      .get("http://localhost:3004/user")
       .then((response) => {
         // Xử lý dữ liệu khi yêu cầu thành công
         const data = response.data;
 
-        // Lặp qua từng đối tượng trong mảng data và trích xuất email và password
+        // Lặp qua từng đối tượng trong mảng data và lấy email và password
         data.forEach((user) => {
           const email = user.email;
           const password = user.password;
 
           if (email === useEmail && password === usePassword) {
             isLoggedIn = true;
-            console.log(email);
             localStorage.setItem("isLogin", email);
           }
         });
-
-        console.log(email);
 
         if (isLoggedIn) {
           alert("Dang nhap thanh cong");

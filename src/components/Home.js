@@ -22,7 +22,6 @@ const Home = () => {
     const response = await axios.get("http://localhost:3004/uploads");
     if (response.status === 200) {
       setList(response.data);
-      console.log(response.data);
     }
   };
   useEffect(() => {

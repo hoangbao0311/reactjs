@@ -34,12 +34,12 @@ function New() {
   const uploadImage = async (e) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
-    // if (file.size > 1024 * 1024) {
-    //   // Kiểm tra kích thước tệp tin, ví dụ: giới hạn 1MB
-    //   alert("File size exceeds the limit (1MB)");
-    // } else {
-    // }
-    setBaseImage(base64);
+    if (file.size > 2 * 1024 * 1024) {
+      // Kiểm tra kích thước tệp tin, ví dụ: giới hạn 1MB
+      alert("File size exceeds the limit (2MB)");
+    } else {
+      setBaseImage(base64);
+    }
   };
 
   const convertBase64 = (file) => {
@@ -66,8 +66,8 @@ function New() {
               Kéo và thả hoặc nhấp vào để tải lên
             </div>
             {baseImage && (
-              <div>
-                <img src={baseImage} className="mx-2 w-64 "></img>
+              <div className="relative">
+                <img src={baseImage} className="h-full "></img>
               </div>
             )}
             <input
