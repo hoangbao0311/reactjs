@@ -63,10 +63,10 @@ const Header = () => {
             <BiUserCircle size={24} />
           </div>
           <Link className={isBlockStyle} to="/login">
-            Dang Nhap
+            Đăng Nhập
           </Link>
           <Link className={isBlockStyle} to="/register">
-            Dang ky
+            Đăng Ký
           </Link>
           <div>
             <button onClick={logOut} className={isLoginStyle} type="">

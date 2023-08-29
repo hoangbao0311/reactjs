@@ -31,11 +31,12 @@ function New() {
     setContent(event.target.value);
   };
 
+  // Giới hạn kích thước tải lên
+
   const uploadImage = async (e) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
     if (file.size > 2 * 1024 * 1024) {
-      // Kiểm tra kích thước tệp tin, ví dụ: giới hạn 1MB
       alert("File size exceeds the limit (2MB)");
     } else {
       setBaseImage(base64);

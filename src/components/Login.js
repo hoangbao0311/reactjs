@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-// let url = "http://localhost:3004/user";
-
 const Login = () => {
   const email = "";
   const password = "";

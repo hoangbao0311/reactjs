@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Register = () => {
-  // const apiUrl = "http://localhost:3004/users";
   const [useEmail, setEmail] = useState("");
   const [usePassword, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,7 +39,6 @@ const Register = () => {
         // Kiểm tra có trùng email có trong data chưa
         response.data.forEach((user) => {
           const email = user.email;
-          console.log(email);
           if (useEmail === email) {
             alert("Thông tin trùng");
             trueEmail = false;

@@ -1,15 +1,25 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
-const myContext = createContext();
+const Context = createContext();
 
-const provider = myContext.Provider;
+const Provider = Context.Provider;
 
-function context() {
-    const [user, setUser] = useState({
-        title: '', 
-    })
+function MyContext({ children }) {
+  const [list, setList] = useState([]);
 
-    return (
-    <div>context</div>
-  )
+  const getData = async () => {
+    const response = await axios.get("http://localhost:3004/uploads");
+    if (response.status === 200) {
+      setList(response.data);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [setList]);
+
+  return <Provider value={{ list, setList, getData }}>{children}</Provider>;
 }
+
+export { Context, MyContext };
