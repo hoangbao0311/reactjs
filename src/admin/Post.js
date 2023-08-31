@@ -29,6 +29,8 @@ const Post = () => {
 
   const [search, setSearch] = useState("");
 
+  useEffect(() => {}, []);
+
   return (
     <div>
       <div>

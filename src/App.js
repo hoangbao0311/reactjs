@@ -10,6 +10,7 @@ import User from "./admin/User";
 import LoginAdmin from "./admin/Login";
 import Post from "./admin/Post";
 import EditPost from "./admin/EditPost";
+import EditUser from "./admin/EditUser";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/admin/loginadmin" element={<LoginAdmin />} />
             <Route path="/admin/post/" element={<Post />} />
             <Route path="/admin/post/edit/:id" element={<EditPost />} />
+            <Route path="/admin/user/edit/:id" element={<EditUser />} />
           </Route>
         </Routes>
       </BrowserRouter>

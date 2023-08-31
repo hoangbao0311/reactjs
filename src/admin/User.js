@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const User = () => {
   const [list, setList] = useState([]);
+  const navigate = useNavigate();
 
   const getData = async () => {
     const response = await axios.get("http://localhost:3004/user");
@@ -17,8 +19,7 @@ export const User = () => {
   }, []);
 
   const handleEdit = (id) => {
-    // Implement your edit logic here
-    console.log("Edit user with ID:", id);
+    navigate(`edit/${id}`);
   };
 
   // Xoa
