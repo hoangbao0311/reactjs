@@ -7,18 +7,6 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const isLogin = "1";
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-
   const handleSubmit = () => {
     if (usePassword !== confirmPassword) {
       alert("Mật khẩu và xác nhận mật khẩu không khớp.");
@@ -40,7 +28,6 @@ const Register = () => {
         response.data.forEach((user) => {
           const email = user.email;
           if (useEmail === email) {
-            alert("Thông tin trùng");
             trueEmail = false;
           } else {
             trueEmail = true;
@@ -59,6 +46,8 @@ const Register = () => {
             .catch((error) => {
               console.error("Lỗi đăng ký:", error);
             });
+        } else {
+          alert("thong tin trung");
         }
       })
       .catch((error) => {
@@ -84,7 +73,7 @@ const Register = () => {
           <div>Email</div>
           <input
             value={useEmail}
-            onChange={handleEmailChange}
+            onChange={(e) => setEmail(e.target.value)}
             className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
             type="text"
             placeholder="Email"
@@ -94,7 +83,7 @@ const Register = () => {
           <div>Mật khẩu</div>
           <input
             value={usePassword}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
             type="password"
             placeholder="Mật khẩu"
@@ -104,7 +93,8 @@ const Register = () => {
           <div>Nhập lại mật khẩu</div>
           <input
             value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
+            // onChange={setConfirmPassword(event.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
             type="password"
             placeholder="Nhập lại mật khẩu"

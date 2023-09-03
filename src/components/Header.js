@@ -60,7 +60,9 @@ const Header = () => {
             <AiFillMessage size={24} />
           </div>
           <div>
-            <BiUserCircle size={24} />
+            <Link to="user">
+              <BiUserCircle size={24} />
+            </Link>
           </div>
           <Link className={isBlockStyle} to="/login">
             Đăng Nhập

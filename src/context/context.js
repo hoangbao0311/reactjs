@@ -9,6 +9,9 @@ function MyContext({ children }) {
   const [list, setList] = useState([]);
   const [imageChanged, setImageChanged] = useState(false);
   const [listUser, setListUser] = useState([]);
+  const [listProduct, setListProduct] = useState([]);
+  const [idUser, setIdUser] = useState(null);
+  const isLogin = localStorage.getItem("isLogin");
 
   // Get Data Upload
 
@@ -19,10 +22,12 @@ function MyContext({ children }) {
     }
   };
 
-  useEffect(() => {
-    getData();
-    getDataUser();
-  }, [setList]);
+  const getCart = async () => {
+    const response = await axios.get("http://localhost:3004/carts");
+    if (response.status === 200) {
+      setListProduct(response.data);
+    }
+  };
 
   // Get data User
 
@@ -33,8 +38,24 @@ function MyContext({ children }) {
     }
   };
 
+  // Kiểm tra id đang đăng nhập
+
+  const obj = listUser.find((item) => item.email == isLogin);
+  const idLogin = obj ? obj.id : "";
+  console.log(idLogin);
+
+  useEffect(() => {
+    getData();
+    getDataUser();
+    getCart();
+  }, [setList, setListProduct, idLogin]);
+
   return (
-    <Provider value={{ list, setList, getData, listUser }}>{children}</Provider>
+    <Provider
+      value={{ list, setList, getData, listUser, listProduct, idLogin }}
+    >
+      {children}
+    </Provider>
   );
 }
 

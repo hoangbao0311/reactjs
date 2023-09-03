@@ -6,11 +6,13 @@ import Header from "./components/Header";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Index from "./admin/Index";
-import User from "./admin/User";
+import UserAdmin from "./admin/User";
 import LoginAdmin from "./admin/Login";
 import Post from "./admin/Post";
 import EditPost from "./admin/EditPost";
 import EditUser from "./admin/EditUser";
+import User from "./components/User";
+import EditPostUser from "./components/EditPostUser";
 
 function App() {
   return (
@@ -22,9 +24,11 @@ function App() {
             <Route path="new" element={<New />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="user" element={<User />} />
+            <Route path="user/edit/:id" element={<EditPostUser />} />
           </Route>
           <Route path="admin" element={<Index />}>
-            <Route path="/admin/user" element={<User />} />
+            <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/loginadmin" element={<LoginAdmin />} />
             <Route path="/admin/post/" element={<Post />} />
             <Route path="/admin/post/edit/:id" element={<EditPost />} />

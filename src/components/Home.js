@@ -6,16 +6,22 @@ import { Context } from "../context/Context";
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [user, setUser] = useState(null);
   const [titles, setTitle] = useState(null);
+  const [id, setId] = useState(null);
   const [contents, setContent] = useState(null);
   const [like, setLike] = useState(0);
   const [isLike, setIsLike] = useState(false);
-  const { list, setList } = useContext(Context);
 
-  const handleImageClick = (image, title, content) => {
+  // context
+  const { list, listProduct, idLogin } = useContext(Context);
+
+  const handleImageClick = (image, title, content, user, id) => {
     setSelectedImage(image);
     setTitle(title);
     setContent(content);
+    setUser(user);
+    setId(id);
     setOpen(true);
   };
 
@@ -23,6 +29,16 @@ const Home = () => {
     setLike(like + (isLike ? -1 : 1));
     setIsLike(!isLike);
   };
+
+  // Xử lý save hình ảnh
+  console.log(listProduct);
+  console.log(idLogin);
+  // console.log(id);
+  const obj = listProduct.find((item) => item.userId == idLogin);
+  console.log(obj);
+  console.log(obj ? obj.products : "");
+
+  const handleSave = () => {};
 
   // Modal antd
   const [open, setOpen] = useState(false);
@@ -44,6 +60,17 @@ const Home = () => {
                     <img className="" src={selectedImage} alt="Selected" />
                   </div>
                   <div className="flex-1 flex flex-col gap-5">
+                    <div className="flex items-center gap-5">
+                      <h1 className="font-bold text-[24px] leading-7">
+                        Người đăng: {user ? user : "None"}
+                      </h1>
+                      <div
+                        // onClick={() => handleSave()}
+                        className=" h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800"
+                      >
+                        Lưu
+                      </div>
+                    </div>
                     <h1 className="font-bold text-[24px] leading-7">
                       {titles}
                     </h1>
@@ -66,10 +93,16 @@ const Home = () => {
       )}
       <Masonry columns={6} gap={8}>
         {list.map((item) => (
-          <div>
+          <div key={item.id}>
             <img
               onClick={() =>
-                handleImageClick(item.image, item.title, item.content)
+                handleImageClick(
+                  item.image,
+                  item.title,
+                  item.content,
+                  item.user,
+                  item.id
+                )
               }
               alt={`Image ${item.id}`}
               key={item.id}

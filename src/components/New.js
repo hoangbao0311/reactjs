@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 function New() {
   const navigate = useNavigate();
+  const isLogin = localStorage.getItem("isLogin");
+  console.log(isLogin);
 
   const setNewUser = async (e) => {
     const response = await axios.post("http://localhost:3004/uploads", {
       image: baseImage,
       title: title,
       content: content,
+      user: isLogin,
     });
     if (response.status === 201) {
       alert("Successfully");
