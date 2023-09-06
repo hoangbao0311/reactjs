@@ -1,55 +1,72 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../context/Context";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const EditPostUser = () => {
-  const { list } = useContext(Context);
+  const { list, listUser } = useContext(Context);
   const { id } = useParams();
   const obj = list.find((item) => item.id == id);
 
   const [imageChanged, setImageChanged] = useState(false);
-  const [title, setTitle] = useState(obj.title);
-  const [content, setContent] = useState(obj.content);
-  const [user, setUser] = useState(obj.user);
-
-  console.log(title);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const navigate = useNavigate();
 
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-  };
+  console.log("title :", title);
+  console.log("content :", content);
+
+  // Xu ly data
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Sử dụng promises để đọc giá trị title và content từ obj
+      const titlePromise = new Promise((resolve) => {
+        resolve(obj ? obj.title : "");
+      });
+
+      const contentPromise = new Promise((resolve) => {
+        resolve(obj ? obj.content : "");
+      });
+
+      // Chờ tất cả promises hoàn thành
+      const [titleValue, contentValue] = await Promise.all([
+        titlePromise,
+        contentPromise,
+      ]);
+
+      // Cập nhật state title và content sau khi promises đã hoàn thành
+      setTitle(titleValue);
+      setContent(contentValue);
+    };
+
+    fetchData();
+  }, [obj]);
 
   // Update Data
-
-  console.log("title", title);
-  console.log("content", content);
 
   const updateData = async () => {
     try {
       // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
       if (imageChanged) {
-        const response = await axios.put(
+        const response = await axios.patch(
           `http://localhost:3004/uploads/${id}`,
           {
             title: title,
             content: content,
             image: baseImage,
-            user: user,
           }
         );
         alert("cap nhat thanh cong");
-        navigate("/admin/post/");
+        navigate("/user");
       } else {
-        const response = await axios.put(
+        const response = await axios.patch(
           `http://localhost:3004/uploads/${id}`,
           {
             title: title,
             content: content,
-            image: obj.image,
-            user: user,
           }
         );
         alert("Cập nhật thành công");
@@ -97,15 +114,9 @@ const EditPostUser = () => {
   return (
     <div className="flex flex-col ">
       <div>Edit</div>
-      <p>ID</p>
+      {/* <p>ID</p>
       <input type="text" name="" value={id} disabled />
-      <input
-        onChange={(e) => setUser(e.target.value)}
-        type="text"
-        name=""
-        defaultValue={obj ? obj.user : ""}
-        disabled
-      />
+      <input type="text" name="" defaultValue={obj ? obj.user : ""} disabled /> */}
       <p>Title</p>
       <input
         type="text"
@@ -127,7 +138,7 @@ const EditPostUser = () => {
       ) : (
         <p>No Image</p>
       )}
-      <div className="bg-[#E9E9E9]  items-center justify-center rounded-lg flex flex-col">
+      <div className="bg-[#E9E9E9] w-1/4 items-center justify-center rounded-lg flex flex-col">
         Chọn Ảnh Mới
         {baseImage && (
           <div className="relative">

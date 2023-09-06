@@ -42,7 +42,6 @@ function MyContext({ children }) {
 
   const obj = listUser.find((item) => item.email == isLogin);
   const idLogin = obj ? obj.id : "";
-  console.log(idLogin);
 
   useEffect(() => {
     getData();

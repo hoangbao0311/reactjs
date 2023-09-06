@@ -11,8 +11,8 @@ const EditPost = () => {
   const obj = list.find((item) => item.id == id);
 
   const [imageChanged, setImageChanged] = useState(false);
-  const [title, setTitle] = useState(obj.title);
-  const [content, setContent] = useState(obj.content);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   console.log(title);
 
@@ -25,7 +25,30 @@ const EditPost = () => {
   const handleContentChange = (event) => {
     setContent(event.target.value);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      // Sử dụng promises để đọc giá trị title và content từ obj
+      const titlePromise = new Promise((resolve) => {
+        resolve(obj ? obj.title : "");
+      });
 
+      const contentPromise = new Promise((resolve) => {
+        resolve(obj ? obj.content : "");
+      });
+
+      // Chờ tất cả promises hoàn thành
+      const [titleValue, contentValue] = await Promise.all([
+        titlePromise,
+        contentPromise,
+      ]);
+
+      // Cập nhật state title và content sau khi promises đã hoàn thành
+      setTitle(titleValue);
+      setContent(contentValue);
+    };
+
+    fetchData();
+  }, [obj]);
   // Update Data
 
   console.log("title", title);
@@ -35,7 +58,7 @@ const EditPost = () => {
     try {
       // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
       if (imageChanged) {
-        const response = await axios.put(
+        const response = await axios.patch(
           `http://localhost:3004/uploads/${id}`,
           {
             title: title,
@@ -46,7 +69,7 @@ const EditPost = () => {
         alert("cap nhat thanh cong");
         navigate("/admin/post/");
       } else {
-        const response = await axios.put(
+        const response = await axios.patch(
           `http://localhost:3004/uploads/${id}`,
           {
             title: title,

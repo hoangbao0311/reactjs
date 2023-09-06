@@ -5,7 +5,7 @@ import Search from "./Search";
 import { BsFillBellFill } from "react-icons/bs";
 import { AiFillMessage } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
-
+import { FaRegBookmark } from "react-icons/fa";
 const isLogin = localStorage.getItem("isLogin");
 
 let isLoginStyle = "hidden";
@@ -53,14 +53,19 @@ const Header = () => {
           <Search />
         </div>
         <div className="flex items-center justify-end gap-3 mx-2">
-          <div>
+          {/* <div>
             <BsFillBellFill size={24} />
           </div>
           <div>
             <AiFillMessage size={24} />
+          </div> */}
+          <div>
+            <Link className={isLoginStyle} to="bookmark">
+              <FaRegBookmark size={24} />
+            </Link>
           </div>
           <div>
-            <Link to="user">
+            <Link className={isLoginStyle} to="user">
               <BiUserCircle size={24} />
             </Link>
           </div>

@@ -13,6 +13,7 @@ import EditPost from "./admin/EditPost";
 import EditUser from "./admin/EditUser";
 import User from "./components/User";
 import EditPostUser from "./components/EditPostUser";
+import Bookmark from "./components/Bookmark ";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="user" element={<User />} />
+            <Route path="bookmark" element={<Bookmark />} />
             <Route path="user/edit/:id" element={<EditPostUser />} />
           </Route>
           <Route path="admin" element={<Index />}>

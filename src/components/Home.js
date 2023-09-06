@@ -3,6 +3,7 @@ import { Button, Modal } from "antd";
 import Masonry from "react-layout-masonry";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { Context } from "../context/Context";
+import axios from "axios";
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -12,7 +13,7 @@ const Home = () => {
   const [contents, setContent] = useState(null);
   const [like, setLike] = useState(0);
   const [isLike, setIsLike] = useState(false);
-
+  const [product, setProduct] = useState(null);
   // context
   const { list, listProduct, idLogin } = useContext(Context);
 
@@ -22,6 +23,7 @@ const Home = () => {
     setContent(content);
     setUser(user);
     setId(id);
+    setProduct(id);
     setOpen(true);
   };
 
@@ -38,7 +40,10 @@ const Home = () => {
   console.log(obj);
   console.log(obj ? obj.products : "");
 
-  const handleSave = () => {};
+  if (obj) {
+    const isProductAlreadyInCart = obj.products.includes(product);
+  }
+  //
 
   // Modal antd
   const [open, setOpen] = useState(false);
