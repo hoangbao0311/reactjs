@@ -2,8 +2,6 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import Logo from "../image/Pinterest Logo _ Real Company _ Alphabet, Letter P Logo.png";
 import Search from "./Search";
-import { BsFillBellFill } from "react-icons/bs";
-import { AiFillMessage } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { FaRegBookmark } from "react-icons/fa";
 const isLogin = localStorage.getItem("isLogin");
@@ -20,6 +18,7 @@ if (isLogin !== null) {
 }
 
 const logOut = () => {
+  localStorage.removeItem("bookmark");
   localStorage.removeItem("isLogin");
   window.location.href = "/";
 };

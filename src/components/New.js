@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 function New() {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("isLogin");
-  console.log(isLogin);
 
   const setNewUser = async (e) => {
     const response = await axios.post("http://localhost:3004/uploads", {
@@ -25,14 +24,6 @@ function New() {
   const [baseImage, setBaseImage] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  const handleTitle = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handleContent = (event) => {
-    setContent(event.target.value);
-  };
 
   // Giới hạn kích thước tải lên
 
@@ -85,14 +76,14 @@ function New() {
         <div className="flex flex-col gap-6 items-center">
           <input
             value={title}
-            onChange={handleTitle}
+            onChange={(e) => setTitle(e.target.value)}
             className="outline-none border-b-2 text-3xl font-bold w-full"
             type="text"
             placeholder="Tạo tiêu đề"
           />
           <input
             value={content}
-            onChange={handleContent}
+            onChange={(e) => setContent(e.target.value)}
             className="outline-none border-b-2 text-base w-full"
             type="text"
             placeholder="Cho mọi người biết bạn đang giới thiệu điều gì "

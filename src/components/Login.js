@@ -8,14 +8,6 @@ const Login = () => {
   const [usePassword, setPassword] = useState("");
   const isLogin = "1";
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
   const submitHanlde = () => {
     let isLoggedIn = false;
 
@@ -33,6 +25,7 @@ const Login = () => {
           if (email === useEmail && password === usePassword) {
             isLoggedIn = true;
             localStorage.setItem("isLogin", email);
+            // localStorage.setItem("bookmark", JSON.stringify([0]));
           }
         });
 
@@ -67,7 +60,7 @@ const Login = () => {
           <div>Email</div>
           <input
             value={useEmail}
-            onChange={handleEmailChange}
+            onChange={(e) => setEmail(e.target.value)}
             className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
             type="text"
             placeholder="Email"
@@ -77,7 +70,7 @@ const Login = () => {
           <div>Mật khẩu</div>
           <input
             value={usePassword}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
             type="password"
             placeholder="Mật khẩu"

@@ -34,10 +34,10 @@ const User = () => {
     <div className="flex justify-center">
       <div className="flex-1 flex flex-col">
         <div className="my-6 font-bold text-[24px]">Bài đăng của bạn:</div>
-        <div className="flex gap-10">
+        <div className="flex gap-10 flex-wrap w-full">
           {obj.map((item) => {
             return (
-              <div>
+              <div className="w-1/3">
                 <p>Title: {item.title}</p>
                 <p>Content: {item.content}</p>
                 <img className="h-52" src={item.image} alt="" />
@@ -57,9 +57,6 @@ const User = () => {
             );
           })}
         </div>
-      </div>
-      <div className="flex-1">
-        <div className="my-6 font-bold text-[24px]">Các ảnh đã lưu:</div>
       </div>
     </div>
   );

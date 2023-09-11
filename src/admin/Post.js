@@ -6,7 +6,7 @@ import { Context } from "../context/Context";
 const Post = () => {
   const navigate = useNavigate();
 
-  const { list, setList, getData } = useContext(Context);
+  const { list, getData } = useContext(Context);
 
   const handleEdit = (id) => {
     navigate(`edit/${id}`);

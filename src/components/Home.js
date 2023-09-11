@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Modal } from "antd";
 import Masonry from "react-layout-masonry";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { Context } from "../context/Context";
-import axios from "axios";
+import { BiHide } from "react-icons/bi";
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -11,11 +10,19 @@ const Home = () => {
   const [titles, setTitle] = useState(null);
   const [id, setId] = useState(null);
   const [contents, setContent] = useState(null);
-  const [like, setLike] = useState(0);
-  const [isLike, setIsLike] = useState(false);
   const [product, setProduct] = useState(null);
+  const [styleSave, setStyleSave] = useState("block");
+  const [styled, setStyled] = useState("hidden");
+  const [open, setOpen] = useState(false);
   // context
   const { list, listProduct, idLogin } = useContext(Context);
+  // Lấy data local
+  const currentBookmarkValue = localStorage.getItem("bookmark");
+  // Chuyển sang mảng
+  const bookmarkArray = currentBookmarkValue
+    ? JSON.parse(currentBookmarkValue)
+    : [];
+  useEffect(() => {}, [styleSave]);
 
   const handleImageClick = (image, title, content, user, id) => {
     setSelectedImage(image);
@@ -25,28 +32,40 @@ const Home = () => {
     setId(id);
     setProduct(id);
     setOpen(true);
+
+    // Kiểm tra sp có trong mảng hay chưa
+    // Tham số product cần tìm trong bookmarkArray trả về true nếu có
+    const productExists = bookmarkArray.includes(id);
+
+    if (productExists) {
+      setStyleSave("hidden");
+      setStyled("block");
+    } else {
+      setStyleSave("block");
+      setStyled("hidden");
+    }
   };
 
-  const handleLike = () => {
-    setLike(like + (isLike ? -1 : 1));
-    setIsLike(!isLike);
+  const handleSave = () => {
+    // Kiểm tra sp có trong mảng hay chưa
+    // Tham số product cần tìm trong bookmarkArray trả về true nếu có
+    const productExists = bookmarkArray.includes(product);
+
+    setStyleSave("hidden");
+    setStyled("block");
+
+    // Nếu không có giá trị nào trong mảng trùng với product được lấy
+    if (!productExists) {
+      bookmarkArray.push(product);
+      const updatedJsonString = JSON.stringify(bookmarkArray);
+      localStorage.setItem("bookmark", updatedJsonString);
+    }
   };
 
-  // Xử lý save hình ảnh
-  console.log(listProduct);
-  console.log(idLogin);
-  // console.log(id);
-  const obj = listProduct.find((item) => item.userId == idLogin);
-  console.log(obj);
-  console.log(obj ? obj.products : "");
+  // Css button save
+  const buttonClassSave = ` ${styleSave} h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800`;
+  const buttonClassSaved = ` ${styled} h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800`;
 
-  if (obj) {
-    const isProductAlreadyInCart = obj.products.includes(product);
-  }
-  //
-
-  // Modal antd
-  const [open, setOpen] = useState(false);
   return (
     <div>
       {selectedImage && (
@@ -70,25 +89,23 @@ const Home = () => {
                         Người đăng: {user ? user : "None"}
                       </h1>
                       <div
-                        // onClick={() => handleSave()}
-                        className=" h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800"
+                        onClick={() => handleSave()}
+                        className={buttonClassSave}
                       >
                         Lưu
+                      </div>
+                      <div
+                        onClick={() => handleSave()}
+                        className={buttonClassSaved}
+                      >
+                        Đã Lưu
                       </div>
                     </div>
                     <h1 className="font-bold text-[24px] leading-7">
                       {titles}
                     </h1>
                     <p className="text-[16px]">{contents}</p>
-                    <div className="flex gap-6 flex-end">
-                      <div
-                        className="flex items-center justify-center"
-                        onClick={handleLike}
-                      >
-                        <AiOutlineLike size={26} />
-                        <h>{like}</h>
-                      </div>
-                    </div>
+                    <div className="flex gap-6 flex-end"></div>
                   </div>
                 </div>
               </div>

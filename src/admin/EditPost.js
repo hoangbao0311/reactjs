@@ -18,13 +18,6 @@ const EditPost = () => {
 
   const navigate = useNavigate();
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-  };
   useEffect(() => {
     const fetchData = async () => {
       // Sử dụng promises để đọc giá trị title và content từ obj
@@ -128,12 +121,12 @@ const EditPost = () => {
       <input
         type="text"
         name=""
-        onChange={handleTitleChange}
+        onChange={(e) => setTitle(e.target.value)}
         defaultValue={obj ? obj.title : ""}
       />
       <p>content</p>
       <input
-        onChange={handleContentChange}
+        onChange={(e) => setContent(e.target.value)}
         type="text"
         name=""
         defaultValue={obj ? obj.content : ""}
