@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../context/Context";
+import { toast } from "react-toastify";
 
 const Bookmark = () => {
   const { list } = useContext(Context);
@@ -34,6 +35,7 @@ const Bookmark = () => {
     localStorage.setItem("bookmark", newBookmarkStorage);
 
     setImgId(newBookmark);
+    toast.success("Đã bỏ lưu bài viết");
   };
 
   return (

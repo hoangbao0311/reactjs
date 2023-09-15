@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Context } from "../context/Context";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditPostUser = () => {
   const { list, listUser } = useContext(Context);
@@ -59,7 +60,7 @@ const EditPostUser = () => {
             image: baseImage,
           }
         );
-        alert("cap nhat thanh cong");
+        toast.success("Cập nhật thành công !");
         navigate("/user");
       } else {
         const response = await axios.patch(
@@ -69,7 +70,7 @@ const EditPostUser = () => {
             content: content,
           }
         );
-        alert("Cập nhật thành công");
+        toast.success("Cập nhật thành công !");
         navigate("/user");
       }
     } catch (error) {
@@ -89,7 +90,7 @@ const EditPostUser = () => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
     if (file.size > 2 * 1024 * 1024) {
-      alert("File size exceeds the limit (2MB)");
+      toast.warning("File size exceeds the limit (2MB) !");
     } else {
       setBaseImage(base64);
       setImageChanged(true);
@@ -112,47 +113,55 @@ const EditPostUser = () => {
   };
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col w-1/2">
       <div>Edit</div>
       {/* <p>ID</p>
       <input type="text" name="" value={id} disabled />
       <input type="text" name="" defaultValue={obj ? obj.user : ""} disabled /> */}
-      <p>Title</p>
+      <p className="font-bold">Title: </p>
       <input
+        className="py-3 outline-none border-[1px] border-black"
         type="text"
         name=""
         onChange={(e) => setTitle(e.target.value)}
         defaultValue={obj ? obj.title : ""}
       />
-      <p>content</p>
+      <p className="font-bold">Content: </p>
       <input
+        className="py-3 outline-none border-[1px] border-black"
         onChange={(e) => setContent(e.target.value)}
         type="text"
         name=""
         defaultValue={obj ? obj.content : ""}
       />
 
-      <p>Image</p>
-      {obj ? (
-        <img className="flex-1 w-44" src={obj.image} alt="" />
-      ) : (
-        <p>No Image</p>
-      )}
-      <div className="bg-[#E9E9E9] w-1/4 items-center justify-center rounded-lg flex flex-col">
-        Chọn Ảnh Mới
-        {baseImage && (
-          <div className="relative">
-            <img src={baseImage} className="h-full "></img>
-          </div>
+      <p className="font-bold">Image: </p>
+      <div className="flex gap-4">
+        {obj ? (
+          <img className="flex-1" src={obj.image} alt="" />
+        ) : (
+          <p>No Image</p>
         )}
-        <input
-          className="bg-slate-500 opacity-0 w-full h-full"
-          type="file"
-          accept="image/*"
-          onChange={uploadImage}
-        />
+        <div className="bg-[#E9E9E9] w-1/5 items-center justify-center rounded-lg flex flex-col flex-1">
+          Chọn Ảnh Mới
+          {baseImage && (
+            <div className="relative">
+              <img src={baseImage} className="h-full "></img>
+            </div>
+          )}
+          <input
+            className="bg-slate-500 opacity-0 w-full h-full"
+            type="file"
+            accept="image/*"
+            onChange={uploadImage}
+          />
+        </div>
       </div>
-      <button onClick={handleClick} type="">
+      <button
+        className=" h-10 justify-center  py-2 font-medium text-lg flex items-center bg-green-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800"
+        onClick={handleClick}
+        type=""
+      >
         Submit
       </button>
     </div>

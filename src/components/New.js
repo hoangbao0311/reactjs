@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../context/Context";
+import { toast } from "react-toastify";
 
 function New() {
   const navigate = useNavigate();
+  const { setReload } = useContext(Context);
   const isLogin = localStorage.getItem("isLogin");
+  const [baseImage, setBaseImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const setNewUser = async (e) => {
     const response = await axios.post("http://localhost:3004/uploads", {
@@ -15,15 +21,11 @@ function New() {
       user: isLogin,
     });
     if (response.status === 201) {
-      alert("Successfully");
-      navigate("/new");
-      // quay ve man hinh chinh
+      setReload(true);
+      toast.success("Đăng bài thành công !");
+      navigate("/");
     }
   };
-
-  const [baseImage, setBaseImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
 
   // Giới hạn kích thước tải lên
 
@@ -31,7 +33,7 @@ function New() {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
     if (file.size > 2 * 1024 * 1024) {
-      alert("File size exceeds the limit (2MB)");
+      toast.warning("File size exceeds the limit (2MB) !");
     } else {
       setBaseImage(base64);
     }

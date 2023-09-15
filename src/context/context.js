@@ -12,7 +12,7 @@ function MyContext({ children }) {
   const [listProduct, setListProduct] = useState([]);
   const [idUser, setIdUser] = useState(null);
   const isLogin = localStorage.getItem("isLogin");
-
+  const [reload, setReload] = useState(false);
   // Get Data Upload
 
   const getData = async () => {
@@ -47,11 +47,20 @@ function MyContext({ children }) {
     getData();
     getDataUser();
     getCart();
-  }, [setList, setListProduct, idLogin]);
+  }, [setList, setListProduct, idLogin, reload]);
 
   return (
     <Provider
-      value={{ list, setList, getData, listUser, listProduct, idLogin }}
+      value={{
+        list,
+        setList,
+        getData,
+        listUser,
+        listProduct,
+        idLogin,
+        setReload,
+        reload,
+      }}
     >
       {children}
     </Provider>

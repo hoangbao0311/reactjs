@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Context } from "../context/Context";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditUser = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const EditUser = () => {
         email: userName,
         password: password,
       });
-      alert("cap nhat thanh cong");
+      toast.success("Cập nhật thành công !");
       navigate("/admin/user/");
     } catch (error) {
       console.error("Lỗi khi cập nhật dữ liệu:", error);

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const email = "";
@@ -30,11 +32,13 @@ const Login = () => {
         });
 
         if (isLoggedIn) {
-          alert("Dang nhap thanh cong");
+          toast.success("Đăng nhập thành công");
           //   Chuyển trang khi login thành công
-          window.location.href = "/";
+          setTimeout(function () {
+            window.location.href = "/";
+          }, 1000);
         } else {
-          alert("Nhap sai");
+          toast.error("Đăng nhập không thành công - Sai email hoặc mật khẩu");
         }
       })
       .catch((error) => {

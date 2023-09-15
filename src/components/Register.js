@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [useEmail, setEmail] = useState("");
@@ -9,7 +10,8 @@ const Register = () => {
 
   const handleSubmit = () => {
     if (usePassword !== confirmPassword) {
-      alert("Mật khẩu và xác nhận mật khẩu không khớp.");
+      toast.warning("Mật khẩu và xác nhận mật khẩu không khớp");
+
       return;
     }
 
@@ -39,7 +41,7 @@ const Register = () => {
           axios
             .post("http://localhost:3004/user", data)
             .then((response) => {
-              alert("Đăng ký thành công:", response.data);
+              toast.success("Đăng ký thành công");
               localStorage.setItem("isLogin", data.email);
               window.location.href = "/";
             })
@@ -47,7 +49,7 @@ const Register = () => {
               console.error("Lỗi đăng ký:", error);
             });
         } else {
-          alert("thong tin trung");
+          toast.warning("Đăng ký không thành công, email đã tồn tại");
         }
       })
       .catch((error) => {
@@ -93,7 +95,6 @@ const Register = () => {
           <div>Nhập lại mật khẩu</div>
           <input
             value={confirmPassword}
-            // onChange={setConfirmPassword(event.target.value)}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
             type="password"

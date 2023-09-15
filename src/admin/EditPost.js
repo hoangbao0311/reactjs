@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Context } from "../context/Context";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditPost = () => {
   const { list } = useContext(Context);
@@ -59,7 +60,7 @@ const EditPost = () => {
             image: baseImage,
           }
         );
-        alert("cap nhat thanh cong");
+        toast.success("Cập nhật thành công !");
         navigate("/admin/post/");
       } else {
         const response = await axios.patch(
@@ -70,7 +71,7 @@ const EditPost = () => {
             image: obj.image,
           }
         );
-        alert("Cập nhật thành công");
+        toast.success("Cập nhật thành công !");
         navigate("/admin/post/");
       }
     } catch (error) {
@@ -90,7 +91,7 @@ const EditPost = () => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
     if (file.size > 2 * 1024 * 1024) {
-      alert("File size exceeds the limit (2MB)");
+      toast.warning("File size exceeds the limit (2MB) !");
     } else {
       setBaseImage(base64);
       setImageChanged(true);
