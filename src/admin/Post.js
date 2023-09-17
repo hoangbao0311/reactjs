@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../context/Context";
+import { Context } from "../context/context";
 
 const Post = () => {
   const navigate = useNavigate();

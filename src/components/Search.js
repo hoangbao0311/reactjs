@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { BiSearch } from "react-icons/bi";
-import { Context } from "../context/Context";
+import { Context } from "../context/context";
 import axios from "axios";
 import { Button, Modal } from "antd";
 

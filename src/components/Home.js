@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Modal } from "antd";
 import Masonry from "react-layout-masonry";
-import { Context } from "../context/Context";
+import { Context } from "../context/context";
 import { toast } from "react-toastify";
 
 const Home = () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../context/Context";
+import { Context } from "../context/context";
 import { toast } from "react-toastify";
 
 const Bookmark = () => {

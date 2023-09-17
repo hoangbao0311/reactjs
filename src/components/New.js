@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../context/Context";
+import { Context } from "../context/context";
 import { toast } from "react-toastify";
 
 function New() {
