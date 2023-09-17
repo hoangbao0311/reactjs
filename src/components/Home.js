@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import Masonry from "react-layout-masonry";
 import { Context } from "../context/Context";
-import { BiHide } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -59,12 +59,13 @@ const Home = () => {
       bookmarkArray.push(product);
       const updatedJsonString = JSON.stringify(bookmarkArray);
       localStorage.setItem("bookmark", updatedJsonString);
+      toast.success("Lưu thành công");
     }
   };
 
   // Css button save
-  const buttonClassSave = ` ${styleSave} h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800`;
-  const buttonClassSaved = ` ${styled} h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800`;
+  const buttonClassSave = ` ${styleSave} h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-3 rounded-3xl m-2 cursor-pointer hover:bg-red-800`;
+  const buttonClassSaved = ` ${styled} h-10 py-2 font-medium text-lg flex items-center bg-red-700 text-white px-3 rounded-3xl m-2 cursor-pointer hover:bg-red-800`;
 
   return (
     <div>
@@ -92,7 +93,7 @@ const Home = () => {
                         onClick={() => handleSave()}
                         className={buttonClassSave}
                       >
-                        Lưu
+                        Add to cart
                       </div>
                       <div
                         onClick={() => handleSave()}

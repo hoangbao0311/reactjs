@@ -12,10 +12,10 @@ const Bookmark = () => {
 
   // Tìm các sp trùng với id có trên localStorage đã lưu
   const results = bookmarkArray.map((item) => {
-    const filter = list?.find((img) => {
+    const listFind = list?.find((img) => {
       return img.id === item;
     });
-    return filter;
+    return listFind;
   });
 
   useEffect(() => {}, [imgId]);
