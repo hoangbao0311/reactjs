@@ -2,17 +2,27 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../context/context";
+import { Link, Outlet } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Post = () => {
   const navigate = useNavigate();
 
   const { list, getData } = useContext(Context);
+  const [search, setSearch] = useState("");
+  const [productStates, setProductStates] = useState("");
 
   const handleEdit = (id) => {
     navigate(`edit/${id}`);
   };
 
-  // Xoa
+  const handleOnOff = async (id, value) => {
+    const response = await axios.patch(`http://localhost:3004/uploads/${id}`, {
+      value: value,
+    });
+    toast.success("Cập nhật thành công !");
+    navigate("/admin/post/");
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -27,19 +37,21 @@ const Post = () => {
     }
   };
 
-  const [search, setSearch] = useState("");
-
   useEffect(() => {}, []);
 
   return (
     <div>
       <div>
+        <div className="h-12 max-w-[200px] border-[1px] border-green-600 text-white bg-green-600 mr-5 p-2 text-base px-4 font-bold font-[inherit]">
+          <Link to="/admin/new">Thêm sản phẩm mới</Link>
+        </div>
         <input
           className="w-full h-10 text-[20px] outline-none pl-3"
           type="text"
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Tìm kiếm theo title"
         />
+
         <div className="flex border-[1px] border-stone-300">
           <div>
             <div className="flex">
@@ -49,7 +61,10 @@ const Post = () => {
               <p className="w-[354px] py-2 flex items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
                 Image
               </p>
-              <p className="w-[325px] py-2  items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
+              <p className="w-[217px] py-2  items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
+                Loại
+              </p>
+              <p className="w-[217px] py-2  items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
                 Title
               </p>
               <p className="w-60 py-2 flex items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
@@ -67,31 +82,57 @@ const Post = () => {
               })
               .map((item) => {
                 return (
-                  <div className="flex mb-5  " key={item.id}>
+                  <div
+                    className="flex mb-5 border-b-[1px] border-y-zinc-400 "
+                    key={item.id}
+                  >
                     <p className="w-[50px] py-2 flex items-center border-l-[1px] border-stone-300 px-4 ">
                       {item.id}
                     </p>
                     <p className="w-[354px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
                       <img className="w-24" src={item.image} />
                     </p>
-                    <p className="flex-1 py-2 flex items-center border-l-[1px] border-stone-300 px-4">
+                    <p className="flex-1 w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
+                      {item.type}
+                    </p>
+                    <p className="flex-1 w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
                       {item.title}
                     </p>
-                    <p className="flex-1 py-2 flex items-center border-l-[1px] border-stone-300 px-4">
+                    <p className="flex-1 w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
                       {item.content}
                     </p>
-                    <p
-                      onClick={() => handleEdit(item.id)}
-                      className=" w-16 h-10 py-2 flex items-center pr-4 bg-cyan-400 text-white px-4 rounded-md m-2 cursor-pointer hover:bg-cyan-500"
-                    >
-                      Edit
-                    </p>
-                    <p
-                      onClick={() => handleDelete(item.id)}
-                      className="w-20 h-10 py-2 flex items-center pr-4 bg-red-700 text-white px-4 rounded-md m-2 cursor-pointer hover:bg-red-800"
-                    >
-                      Delete
-                    </p>
+                    <div className="flex items-center">
+                      <form className="flex gap-2">
+                        <input
+                          type="radio"
+                          name="onoff"
+                          value="on"
+                          defaultChecked={item.value == "on"}
+                          onClick={(e) => handleOnOff(item.id, e.target.value)}
+                        />
+                        Bật
+                        <input
+                          type="radio"
+                          name="onoff"
+                          value="off"
+                          defaultChecked={item.value == "off"}
+                          onClick={(e) => handleOnOff(item.id, e.target.value)}
+                        />
+                        Tắt
+                      </form>
+                      <p
+                        onClick={() => handleEdit(item.id)}
+                        className=" w-16 h-10 py-2 flex items-center pr-4 bg-cyan-400 text-white px-4 rounded-md m-2 cursor-pointer hover:bg-cyan-500"
+                      >
+                        Edit
+                      </p>
+                      <p
+                        onClick={() => handleDelete(item.id)}
+                        className="w-20 h-10 py-2 flex items-center pr-4 bg-red-700 text-white px-4 rounded-md m-2 cursor-pointer hover:bg-red-800"
+                      >
+                        Delete
+                      </p>
+                    </div>
                   </div>
                 );
               })}

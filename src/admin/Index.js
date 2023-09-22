@@ -7,7 +7,7 @@ const Index = () => {
       <div>
         <div>
           <div class="flex  bg-gray-100">
-            <aside class="w-64 bg-blue-500 ">
+            <aside class="w-44 bg-blue-500 ">
               <div class="p-4 text-white">
                 <h1 class="text-2xl font-semibold">Admin Panel</h1>
               </div>

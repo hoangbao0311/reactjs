@@ -39,15 +39,16 @@ function MyContext({ children }) {
   };
 
   // Kiểm tra id đang đăng nhập
-  // ..
+
   const obj = listUser.find((item) => item.email == isLogin);
+
   const idLogin = obj ? obj.id : "";
 
   useEffect(() => {
     getData();
     getDataUser();
     getCart();
-  }, [setList, setListProduct, idLogin, reload]);
+  }, [setList, setListProduct, reload]);
 
   return (
     <Provider
@@ -60,6 +61,7 @@ function MyContext({ children }) {
         idLogin,
         setReload,
         reload,
+        getCart,
       }}
     >
       {children}

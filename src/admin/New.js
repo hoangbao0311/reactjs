@@ -14,6 +14,7 @@ function New() {
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(0);
   const [type, setType] = useState("");
+  const [value, setValue] = useState("on");
   const setNewUser = async (e) => {
     const response = await axios.post("http://localhost:3004/uploads", {
       image: baseImage,
@@ -22,11 +23,12 @@ function New() {
       user: isLogin,
       price: price,
       type: type,
+      value: value,
     });
     if (response.status === 201) {
       setReload(true);
       toast.success("Đăng bài thành công !");
-      navigate("/");
+      navigate("/admin/post");
     }
   };
 
@@ -101,9 +103,11 @@ function New() {
           >
             <option value={"1"}>Chọn Loại Đồ Uống</option>
             <option value={"Cà Phê"}>Cà Phê</option>
-            <option value={"FREEZE"}>FREEZE</option>
+            <option value={"Trà Sữa"}>Trà Sữa</option>
             <option value={"TRÀ"}>TRÀ</option>
             <option value={"Cà Phê Gói"}>Cà Phê Gói</option>
+            <option value={"Snack"}>SNACK</option>
+            <option value={"Bakery"}>BAKERY</option>
           </select>
           <div className="flex w-full">
             <input

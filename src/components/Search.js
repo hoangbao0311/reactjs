@@ -37,18 +37,17 @@ const Search = () => {
   };
 
   return (
-    <div className="w-full flex items-center min-w-[407px]">
+    <div className="w-full flex items-center min-w-[600px]">
       <div className="w-full relative">
-        <div className="flex min-w-[407px] w-full">
-          <span className="h-10 pl-4 bg-[#DDE4E4] flex items-center justify-center rounded-l-[20px] text-gray-500 py-6">
+        <div className="flex w-1/2 border-[1px] border-[#0C713D] rounded-lg">
+          <span className="h-10 pl-4  flex items-center justify-center rounded-l-[20px] text-gray-500 py-6">
             <BiSearch size={24} />
           </span>
           <input
             type="text"
-            className="text-gray-500 outline-none bg-[#DDE4E4] px-4 py-2 rounded-r-[20px] w-full h-12"
+            className="text-gray-500 outline-none  px-4 py-2 rounded-r-[20px] w-full h-12"
             placeholder="Search"
             onFocus={handleFocus}
-            // onBlur={handleBlur}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
@@ -96,25 +95,28 @@ const Search = () => {
             >
               X
             </p>
-            {list
-              .filter((item) => {
-                return item.title.toLowerCase().includes(search);
-              })
-              .map((item) => {
-                return (
-                  <div
-                    className="flex mb-5 bg-slate-50 rounded-xl cursor-pointer"
-                    key={item.id}
-                    onClick={() =>
-                      handleImageClick(item.image, item.title, item.content)
-                    }
-                  >
-                    <p className="flex-1 py-2 flex items-center border-l-[1px] border-stone-300 px-4 w-[925px]">
-                      {item.title}
-                    </p>
-                  </div>
-                );
-              })}
+            <div>
+              {list
+                .filter((item) => {
+                  return item.title.toLowerCase().includes(search);
+                })
+                .map((item) => {
+                  return (
+                    <div
+                      className="flex mb-5 bg-slate-50 rounded-xl cursor-pointer "
+                      key={item.id}
+                      onClick={() =>
+                        handleImageClick(item.image, item.title, item.content)
+                      }
+                    >
+                      <img className="h-10" src={item.image} alt="" />
+                      <p className="flex-1 py-2 flex items-center border-l-[1px] border-stone-300 px-4">
+                        {item.title}
+                      </p>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         )}
       </div>

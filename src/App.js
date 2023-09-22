@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import New from "./components/New";
+import New from "./admin/New";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -14,7 +14,10 @@ import EditUser from "./admin/EditUser";
 import User from "./components/User";
 import EditPostUser from "./components/EditPostUser";
 import Bookmark from "./components/Bookmark ";
-import { ToastContainer, toast } from "react-toastify";
+import Order from "./components/Order";
+import Tea from "./components/Tea";
+import Cafe from "./components/Cafe";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -24,14 +27,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Header />}>
             <Route path="/" element={<Home />} />
-            <Route path="new" element={<New />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="user" element={<User />} />
             <Route path="bookmark" element={<Bookmark />} />
+            <Route path="tea" element={<Tea />} />
+            <Route path="cafe" element={<Cafe />} />
+            <Route path="carts/order" element={<Order />} />
             <Route path="user/edit/:id" element={<EditPostUser />} />
           </Route>
           <Route path="admin" element={<Index />}>
+            <Route path="/admin/new" element={<New />} />
             <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/loginadmin" element={<LoginAdmin />} />
             <Route path="/admin/post/" element={<Post />} />

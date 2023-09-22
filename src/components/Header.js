@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import Logo from "../image/Pinterest Logo _ Real Company _ Alphabet, Letter P Logo.png";
+import Logo from "../image/logo_2.png";
 import Search from "./Search";
 import { BiUserCircle } from "react-icons/bi";
-import { FaRegBookmark } from "react-icons/fa";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import Footer from "./Footer";
+
 const isLogin = localStorage.getItem("isLogin");
 
 let isLoginStyle = "hidden";
@@ -19,6 +21,7 @@ if (isLogin !== null) {
 
 const logOut = () => {
   localStorage.removeItem("bookmark");
+  localStorage.removeItem("cartItems");
   localStorage.removeItem("isLogin");
   window.location.href = "/";
 };
@@ -33,18 +36,42 @@ const Header = () => {
           </div>
           <div>
             <Link
-              className="h-12 min-w-[60px] px-4 font-bold bg-black text-white rounded-3xl py-3 flex items-center justify-center"
+              className="h-12 min-w-[60px] text-base px-4 font-bold flex items-center justify-center font-[inherit]"
               to="/"
             >
-              Trang Chủ{" "}
+              TRANG CHỦ
             </Link>
           </div>
           <div>
             <Link
-              className="h-12 min-w-[60px] px-4 font-bold rounded-3xl"
-              to="/new"
+              className="h-12 min-w-[60px] text-base px-4 font-bold flex items-center justify-center font-[inherit]"
+              to="/cafe"
             >
-              Tạo +
+              CÀ PHÊ
+            </Link>
+          </div>
+          <div>
+            <Link
+              className="h-12 min-w-[60px] text-base px-4 font-bold flex items-center justify-center font-[inherit]"
+              to="/tea"
+            >
+              TRÀ
+            </Link>
+          </div>
+          <div>
+            <Link
+              className="h-12 min-w-[60px] text-base px-4 font-bold flex items-center justify-center font-[inherit]"
+              to="/"
+            >
+              THỨC UỐNG
+            </Link>
+          </div>
+          <div>
+            <Link
+              className="h-12 min-w-[60px] text-base px-4 font-bold flex items-center justify-center font-[inherit]"
+              to="/"
+            >
+              SẢN PHẨM
             </Link>
           </div>
         </div>
@@ -52,20 +79,14 @@ const Header = () => {
           <Search />
         </div>
         <div className="flex items-center justify-end gap-3 mx-2">
-          {/* <div>
-            <BsFillBellFill size={24} />
-          </div>
-          <div>
-            <AiFillMessage size={24} />
-          </div> */}
           <div>
             <Link className={isLoginStyle} to="bookmark">
-              <FaRegBookmark size={24} />
+              <AiOutlineShoppingCart size={24} color="green" />
             </Link>
           </div>
           <div>
             <Link className={isLoginStyle} to="user">
-              <BiUserCircle size={24} />
+              <BiUserCircle size={24} color="green" />
             </Link>
           </div>
           <Link className={isBlockStyle} to="/login">
@@ -82,9 +103,11 @@ const Header = () => {
           <div className={isLoginStyle}>Xin chào: {isLogin}</div>
         </div>
       </div>
+
       <div className="mt-20 ">
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 };
