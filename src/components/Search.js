@@ -25,8 +25,8 @@ const Search = () => {
   };
 
   return (
-    <div className="w-full flex items-center min-w-[600px]">
-      <div className="w-full relative">
+    <div className=" flex items-center ">
+      <div className="w-1/2 relative">
         <div className="flex w-1/2 border-[1px] border-[#0C713D] rounded-lg">
           <span className="h-10 pl-4  flex items-center justify-center rounded-l-[20px] text-gray-500 py-6">
             <BiSearch size={24} />

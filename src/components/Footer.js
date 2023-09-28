@@ -3,8 +3,8 @@ import dtbbct from "../image/dathongbao.png";
 
 const Footer = () => {
   return (
-    <div className="flex justify-center items-center mx-48 gap-10 pb-8 mt-10">
-      <div className="mt-8 grid gap-x-8 gap-y-12 grid-cols-2">
+    <div className="lg:flex-row flex flex-col justify-center items-center mx-48 gap-10 pb-8 mt-10">
+      <div className="mt-8 grid gap-x-8 gap-y-12 lg:grid-cols-2 grid-cols-1">
         <div>
           <div>
             <b>Trụ sở chính</b>: Công ty Cổ Phần Phúc Long Heritage - ĐKKD: 0316

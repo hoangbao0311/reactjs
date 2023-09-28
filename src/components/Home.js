@@ -226,7 +226,7 @@ const Home = () => {
                 <h1 className="border-y-[1px] border-[#0C713D] px-5">Cà phê</h1>
               </div>
             )}
-            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+            <div className="grid gap-x-8 gap-y-12 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
               {listCafe.map((item) => (
                 <div
                   key={item.id}
@@ -271,7 +271,7 @@ const Home = () => {
                 <h1 className="border-y-[1px] border-[#0C713D] px-5">Đá Xay</h1>
               </div>
             )}
-            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+            <div className="grid gap-x-8 gap-y-12 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
               {listDaxay.map((item) => (
                 <div
                   key={item.id}
@@ -316,7 +316,7 @@ const Home = () => {
                 <h1 className="border-y-[1px] border-[#0C713D] px-5">Trà</h1>
               </div>
             )}
-            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+            <div className="grid gap-x-8 gap-y-12 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
               {listTea.map((item) => (
                 <div
                   key={item.id}
@@ -360,7 +360,7 @@ const Home = () => {
                 <h1 className="border-y-[1px] border-[#0C713D] px-5">FREEZE</h1>
               </div>
             )}
-            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+            <div className="grid gap-x-8 gap-y-12 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
               {listFreeze?.map((item) => (
                 <div
                   key={item.id}
@@ -404,7 +404,7 @@ const Home = () => {
                 <h1>Cà Phê Gói</h1>
               </div>
             )}
-            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+            <div className="grid gap-x-8 gap-y-12 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
               {listBagCafe.map((item) => (
                 <div
                   key={item.id}
@@ -447,7 +447,7 @@ const Home = () => {
         )}
         {selectedCategory === "SNACKS" && (
           <div>
-            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+            <div className="grid gap-x-8 gap-y-12 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
               {listSnack.map((item) => (
                 <div
                   key={item.id}
@@ -490,7 +490,7 @@ const Home = () => {
         )}
         {selectedCategory === "BAKERY" && (
           <div>
-            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+            <div className="grid gap-x-8 gap-y-12 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
               {listBakery.map((item) => (
                 <div
                   key={item.id}
