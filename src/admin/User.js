@@ -3,6 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const User = () => {
+  const loginAdmin = localStorage.getItem("admin");
+  if (loginAdmin == null) {
+    window.location.href = "/admin/loginadmin";
+  }
+
   const [list, setList] = useState([]);
   const navigate = useNavigate();
 
@@ -39,12 +44,12 @@ export const User = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <div>
+    <div className="h-screen">
       <input
         className="w-full h-10 text-[20px] outline-none pl-3"
         type="text"
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Tìm kiếm theo email"
+        placeholder="Tìm kiếm theo username"
       />
       <div className="flex border-[1px] border-stone-300">
         <div>
@@ -53,7 +58,7 @@ export const User = () => {
               ID
             </p>
             <p className="w-[354px] py-2 flex items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
-              Email
+              UserName
             </p>
             <p className="w-60 py-2 flex items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
               Password

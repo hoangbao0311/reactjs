@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Logo from "../image/logo_2.png";
 import Search from "./Search";
@@ -8,7 +8,7 @@ import Footer from "./Footer";
 
 const isLogin = localStorage.getItem("isLogin");
 
-let isLoginStyle = "hidden";
+let isLoginStyle = "hidden ";
 let isBlockStyle = "block";
 
 if (isLogin !== null) {
@@ -20,8 +20,6 @@ if (isLogin !== null) {
 }
 
 const logOut = () => {
-  localStorage.removeItem("bookmark");
-  localStorage.removeItem("cartItems");
   localStorage.removeItem("isLogin");
   window.location.href = "/";
 };
@@ -79,8 +77,8 @@ const Header = () => {
           <Search />
         </div>
         <div className="flex items-center justify-end gap-3 mx-2">
-          <div>
-            <Link className={isLoginStyle} to="bookmark">
+          <div className="flex">
+            <Link to="bookmark">
               <AiOutlineShoppingCart size={24} color="green" />
             </Link>
           </div>

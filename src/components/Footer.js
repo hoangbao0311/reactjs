@@ -3,7 +3,7 @@ import dtbbct from "../image/dathongbao.png";
 
 const Footer = () => {
   return (
-    <div className="flex justify-center items-center mx-48 gap-10 pb-8">
+    <div className="flex justify-center items-center mx-48 gap-10 pb-8 mt-10">
       <div className="mt-8 grid gap-x-8 gap-y-12 grid-cols-2">
         <div>
           <div>

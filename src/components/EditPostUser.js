@@ -52,24 +52,18 @@ const EditPostUser = () => {
     try {
       // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
       if (imageChanged) {
-        const response = await axios.patch(
-          `http://localhost:3004/uploads/${id}`,
-          {
-            title: title,
-            content: content,
-            image: baseImage,
-          }
-        );
+        await axios.patch(`http://localhost:3004/uploads/${id}`, {
+          title: title,
+          content: content,
+          image: baseImage,
+        });
         toast.success("Cập nhật thành công !");
         navigate("/user");
       } else {
-        const response = await axios.patch(
-          `http://localhost:3004/uploads/${id}`,
-          {
-            title: title,
-            content: content,
-          }
-        );
+        await axios.patch(`http://localhost:3004/uploads/${id}`, {
+          title: title,
+          content: content,
+        });
         toast.success("Cập nhật thành công !");
         navigate("/user");
       }

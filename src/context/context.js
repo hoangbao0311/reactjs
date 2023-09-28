@@ -12,6 +12,7 @@ function MyContext({ children }) {
   const [listProduct, setListProduct] = useState([]);
   const [idUser, setIdUser] = useState(null);
   const isLogin = localStorage.getItem("isLogin");
+  const [voucherData, setVoucherData] = useState([]);
   const [reload, setReload] = useState(false);
   // Get Data Upload
 
@@ -38,6 +39,12 @@ function MyContext({ children }) {
     }
   };
 
+  const getVoucher = async () => {
+    const response = await axios.get("http://localhost:3004/voucher");
+    if (response.status === 200) {
+      setVoucherData(response.data);
+    }
+  };
   // Kiểm tra id đang đăng nhập
 
   const obj = listUser.find((item) => item.email == isLogin);
@@ -48,6 +55,7 @@ function MyContext({ children }) {
     getData();
     getDataUser();
     getCart();
+    getVoucher();
   }, [setList, setListProduct, reload]);
 
   return (
@@ -59,9 +67,11 @@ function MyContext({ children }) {
         listUser,
         listProduct,
         idLogin,
+        isLogin,
         setReload,
         reload,
         getCart,
+        voucherData,
       }}
     >
       {children}

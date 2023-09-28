@@ -5,35 +5,23 @@ import axios from "axios";
 import { Button, Modal } from "antd";
 
 const Search = () => {
-  const { list, getData } = useContext(Context);
+  const { list } = useContext(Context);
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [titles, setTitle] = useState(null);
   const [contents, setContent] = useState(null);
-  const [like, setLike] = useState(0);
-  const [isLike, setIsLike] = useState(false);
   const [open, setOpen] = useState(false);
+  const [price, setPrice] = useState(null);
+  const [value, setValue] = useState(null);
 
-  const handleImageClick = (image, title, content) => {
+  const handleImageClick = (image, title, content, price, value) => {
     setSelectedImage(image);
     setTitle(title);
     setContent(content);
+    setPrice(price);
+    setValue(value);
     setOpen(true);
-  };
-
-  const handleLike = () => {
-    setLike(like + (isLike ? -1 : 1));
-    setIsLike(!isLike);
-  };
-
-  // Xử lý input focus
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleCloseSearch = () => {
-    setIsFocused(false);
   };
 
   return (
@@ -47,7 +35,7 @@ const Search = () => {
             type="text"
             className="text-gray-500 outline-none  px-4 py-2 rounded-r-[20px] w-full h-12"
             placeholder="Search"
-            onFocus={handleFocus}
+            onFocus={() => setIsFocused(true)}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
@@ -58,7 +46,7 @@ const Search = () => {
               open={open}
               onOk={() => setOpen(false)}
               onCancel={() => setOpen(false)}
-              width={1000}
+              width={800}
             >
               <div className="bg-[#E9E9E9] flex justify-center p-7 rounded-3xl ">
                 <div className="bg-[#ffffff] rounded-2xl text-[12px] p-5 flex justify-around">
@@ -71,15 +59,9 @@ const Search = () => {
                         {titles}
                       </h1>
                       <p className="text-[16px]">{contents}</p>
-                      <div className="flex gap-6 flex-end">
-                        <div
-                          className="flex items-center justify-center"
-                          onClick={handleLike}
-                        >
-                          {/* <AiOutlineLike size={26} /> */}
-                          <h>{like}</h>
-                        </div>
-                      </div>
+                      <p className="font-bold text-[24px] leading-7">
+                        {parseInt(price).toLocaleString("vi-VN")} đ
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -88,9 +70,9 @@ const Search = () => {
           </>
         )}
         {isFocused && (
-          <div className="flex flex-col h-auto absolute bg-slate-50 pt-3">
+          <div className="flex flex-col h-auto absolute bg-slate-50 pt-3 w-1/2">
             <p
-              onClick={handleCloseSearch}
+              onClick={() => setIsFocused(false)}
               className="text-end text-[24px] mr-5 text-red-500 font-bold cursor-pointer"
             >
               X
@@ -106,7 +88,13 @@ const Search = () => {
                       className="flex mb-5 bg-slate-50 rounded-xl cursor-pointer "
                       key={item.id}
                       onClick={() =>
-                        handleImageClick(item.image, item.title, item.content)
+                        handleImageClick(
+                          item.image,
+                          item.title,
+                          item.content,
+                          item.price,
+                          item.value
+                        )
                       }
                     >
                       <img className="h-10" src={item.image} alt="" />

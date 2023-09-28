@@ -20,14 +20,12 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("THỨC UỐNG");
   const [open, setOpen] = useState(false);
   // context
-  const { list, listProduct, idLogin } = useContext(Context);
-  // Lấy data local
-  const currentBookmarkValue = localStorage.getItem("bookmark");
-  // Chuyển sang mảng
-  const bookmarkArray = currentBookmarkValue
-    ? JSON.parse(currentBookmarkValue)
-    : [];
+  const { list, isLogin } = useContext(Context);
 
+  // Chuyển sang mảng
+  const cartArray = localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [];
   // Tạo đối tượng sản phẩm
   const currentCartValue = { id: id, quantity: quantity, price: price };
 
@@ -47,9 +45,8 @@ const Home = () => {
     setValue(value);
     setOpen(true);
 
-    // Kiểm tra sp có trong mảng hay chưa
-    // Tham số product cần tìm trong bookmarkArray trả về true nếu có
-    const productExists = bookmarkArray.includes(id);
+    // Kiểm tra sp có trong mảng cartArray hay chưa để xử lý ẩn hiện nút mua
+    const productExists = cartArray.find((item) => item.id === id);
 
     if (productExists) {
       setStyleSave("hidden");
@@ -60,27 +57,17 @@ const Home = () => {
     }
   };
 
-  const handleSave = () => {
-    // Kiểm tra sp có trong mảng hay chưa
-    // Tham số product cần tìm trong bookmarkArray trả về true nếu có
-    const productExists = bookmarkArray.includes(product);
-
+  const handleBuy = () => {
     setStyleSave("hidden");
     setStyled("block");
 
-    // Nếu không có giá trị nào trong mảng trùng với product được lấy
-    if (!productExists) {
-      bookmarkArray.push(product);
-      const updatedJsonString = JSON.stringify(bookmarkArray);
-      localStorage.setItem("bookmark", updatedJsonString);
+    cartArray.push(product);
 
-      cartItems.push(currentCartValue);
+    cartItems.push(currentCartValue);
 
-      // Lưu chuỗi JSON vào localStorage
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
-      toast.success("Đã thêm vào giỏ");
-    }
+    toast.success("Đã thêm vào giỏ");
   };
 
   // Css button save
@@ -94,7 +81,8 @@ const Home = () => {
   const listBagCafe = list.filter((item) => item.type === "Cà Phê Gói");
   const listSnack = list.filter((item) => item.type === "Snack");
   const listBakery = list.filter((item) => item.type === "Bakery");
-  console.log(listFreeze);
+  const listDaxay = list.filter((item) => item.type === "Đá Xay");
+
   return (
     <div className="flex justify-center">
       {selectedImage && (
@@ -106,12 +94,12 @@ const Home = () => {
             onCancel={() => setOpen(false)}
             width={800}
           >
-            <div className="bg-[#E9E9E9] flex justify-center p-7 rounded-3xl ">
+            <div className=" flex justify-center p-7 rounded-3xl">
               <div className="bg-[#ffffff] rounded-2xl text-[12px] p-5 flex justify-around">
                 <div className="flex gap-6 w-auto h-auto ">
-                  <div className="bg-[#E9E9E9] w-full h-full flex flex-col flex-1">
+                  <div className="bg-white w-full h-full flex flex-col flex-1">
                     <img
-                      className="bg-white"
+                      className="bg-white w-96"
                       src={selectedImage}
                       alt="Selected"
                     />
@@ -125,25 +113,25 @@ const Home = () => {
                       {parseInt(price).toLocaleString("vi-VN")} đ
                     </p>
                     <div className="flex gap-6 flex-end"></div>
+
                     <div className="flex items-center gap-5">
                       {value == "on" ? (
                         <div
-                          onClick={() => handleSave()}
+                          onClick={() => handleBuy()}
                           className={buttonClassSave}
                         >
                           Add to cart
                         </div>
                       ) : (
-                        <div className="text-red-700 border-red-700 border-[1px] p-1 px-2 cursor-pointer font-bold">
+                        <div className="text-red-700 border-red-700 border-[1px] p-2 px-3 cursor-pointer font-bold">
                           HẾT HÀNG
                         </div>
                       )}
-                      <div
-                        onClick={() => handleSave()}
-                        className={buttonClassSaved}
-                      >
-                        Đã thêm vào giỏ
-                      </div>
+                      {value == "on" ? (
+                        <div className={buttonClassSaved}>Đã thêm vào giỏ</div>
+                      ) : (
+                        <div></div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -232,16 +220,17 @@ const Home = () => {
         </div>
         {selectedCategory === "THỨC UỐNG" && (
           <div>
+            {/* CF */}
             {listCafe.length !== 0 && (
-              <div>
-                <h1>Cà phê</h1>
+              <div className="flex justify-center font-['Lora'] text-[#0C713D] text-4xl font-thin my-8 ">
+                <h1 className="border-y-[1px] border-[#0C713D] px-5">Cà phê</h1>
               </div>
             )}
             <div className="grid gap-x-8 gap-y-12 grid-cols-4">
               {listCafe.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg"
+                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg cursor-pointer "
                   onClick={() =>
                     handleImageClick(
                       item.image,
@@ -276,16 +265,62 @@ const Home = () => {
                 </div>
               ))}
             </div>
+            {/* DAXAY */}
+            {listDaxay.length !== 0 && (
+              <div className="flex justify-center font-['Lora'] text-[#0C713D] text-4xl font-thin my-8 ">
+                <h1 className="border-y-[1px] border-[#0C713D] px-5">Đá Xay</h1>
+              </div>
+            )}
+            <div className="grid gap-x-8 gap-y-12 grid-cols-4">
+              {listDaxay.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg cursor-pointer"
+                  onClick={() =>
+                    handleImageClick(
+                      item.image,
+                      item.title,
+                      item.content,
+                      item.user,
+                      item.id,
+                      item.price,
+                      item.value
+                    )
+                  }
+                >
+                  <img
+                    className="w-48"
+                    alt={`Image ${item.id}`}
+                    key={item.id}
+                    src={item.image}
+                  />
+                  <div className="text-lg">{item.title}</div>
+                  <div className="text-[#0C713D] font-black text-lg font-[Tahoma]">
+                    {parseInt(item.price).toLocaleString("vi-VN")} đ
+                  </div>
+                  {item.value == "on" ? (
+                    <div className="text-[#0C713D] border-[#0C713D] border-[1px] p-1 px-2 cursor-pointer">
+                      ĐẶT HÀNG
+                    </div>
+                  ) : (
+                    <div className="text-red-700 border-red-700 border-[1px] p-1 px-2 cursor-pointer">
+                      HẾT HÀNG
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            {/* TRA */}
             {listTea.length !== 0 && (
-              <div>
-                <h1>Trà</h1>
+              <div className="flex justify-center font-['Lora'] text-[#0C713D] text-4xl font-thin my-8 ">
+                <h1 className="border-y-[1px] border-[#0C713D] px-5">Trà</h1>
               </div>
             )}
             <div className="grid gap-x-8 gap-y-12 grid-cols-4">
               {listTea.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg"
+                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg cursor-pointer"
                   onClick={() =>
                     handleImageClick(
                       item.image,
@@ -321,15 +356,15 @@ const Home = () => {
               ))}
             </div>
             {listFreeze.length !== 0 && (
-              <div>
-                <h1>FREEZE</h1>
+              <div className="flex justify-center font-['Lora'] text-[#0C713D] text-4xl font-thin my-8 ">
+                <h1 className="border-y-[1px] border-[#0C713D] px-5">FREEZE</h1>
               </div>
             )}
             <div className="grid gap-x-8 gap-y-12 grid-cols-4">
               {listFreeze?.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg"
+                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg cursor-pointer"
                   onClick={() =>
                     handleImageClick(
                       item.image,
@@ -373,7 +408,7 @@ const Home = () => {
               {listBagCafe.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg"
+                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg cursor-pointer"
                   onClick={() =>
                     handleImageClick(
                       item.image,
@@ -416,7 +451,7 @@ const Home = () => {
               {listSnack.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg"
+                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg cursor-pointer"
                   onClick={() =>
                     handleImageClick(
                       item.image,
@@ -459,7 +494,7 @@ const Home = () => {
               {listBakery.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg"
+                  className="flex flex-col justify-center items-center gap-5 p-4 hover:shadow-lg cursor-pointer"
                   onClick={() =>
                     handleImageClick(
                       item.image,

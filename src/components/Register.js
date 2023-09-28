@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import logo from "../image/logo_2.png";
 
 const Register = () => {
   const [useEmail, setEmail] = useState("");
@@ -8,10 +9,18 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const isLogin = "1";
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (useEmail.length < 5) {
+      toast.warning("Tên đăng nhập quá ngắn. Vui lòng nhập lại.");
+      return;
+    }
+    if (usePassword.length < 5) {
+      toast.warning("Mật khẩu quá ngắn. Vui lòng chọn mật khẩu khác.");
+      return;
+    }
     if (usePassword !== confirmPassword) {
       toast.warning("Mật khẩu và xác nhận mật khẩu không khớp");
-
       return;
     }
 
@@ -61,55 +70,57 @@ const Register = () => {
     <div className="flex justify-center bg-[#E9E9E9] h-screen">
       <div className=" bg-white rounded-3xl w-[484px] flex flex-col items-center justify-center h-fit py-7 pb-9 mt-7 gap-4">
         <div>
-          <img
-            className="w-20 h-20"
-            src="/image/Pinterest Logo _ Real Company _ Alphabet, Letter P Logo.png"
-          />
+          <img className="w-20 h-20" src={logo} />
         </div>
         <div>
           <h1 className="text-[32px] px-4 text-center font-semibold">
-            Chào mừng bạn đến với Pinterest
+            Đăng Ký
           </h1>
         </div>
-        <div>
-          <div>Email</div>
-          <input
-            value={useEmail}
-            onChange={(e) => setEmail(e.target.value)}
-            className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
-            type="text"
-            placeholder="Email"
-          />
-        </div>
-        <div>
-          <div>Mật khẩu</div>
-          <input
-            value={usePassword}
-            onChange={(e) => setPassword(e.target.value)}
-            className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
-            type="password"
-            placeholder="Mật khẩu"
-          />
-        </div>
-        <div>
-          <div>Nhập lại mật khẩu</div>
-          <input
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
-            type="password"
-            placeholder="Nhập lại mật khẩu"
-          />
-        </div>
-        <div>
-          <button
-            className="w-60 h-10 bg-[#E60023] text-white rounded-3xl font-bold"
-            type="submit"
-            onClick={handleSubmit} // Gọi hàm xử lý khi nhấn nút Đăng ký
-          >
-            Đăng ký
-          </button>
-        </div>
+        <form
+          className="flex gap-3 flex-col justify-center items-center"
+          onSubmit={handleSubmit}
+        >
+          <div>
+            <div>UserName</div>
+            <input
+              value={useEmail}
+              onChange={(e) => setEmail(e.target.value)}
+              className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
+              type="text"
+              placeholder="UserName"
+            />
+          </div>
+          <div>
+            <div>Mật khẩu</div>
+            <input
+              value={usePassword}
+              onChange={(e) => setPassword(e.target.value)}
+              className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
+              type="password"
+              placeholder="Mật khẩu"
+            />
+          </div>
+          <div>
+            <div>Nhập lại mật khẩu</div>
+            <input
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="px-4 w-72 py-2 min-h-[48px] rounded-2xl outline-none border-[1px] border-solid border-[#cdcdcd] shadow-sm"
+              type="password"
+              placeholder="Nhập lại mật khẩu"
+            />
+          </div>
+          <div>
+            <button
+              className="w-60 h-10 bg-[#0C713D] text-white border-[#0C713D] border-[1px] rounded-3xl font-bold mt-4 hover:opacity-95"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Đăng ký
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

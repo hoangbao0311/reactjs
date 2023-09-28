@@ -6,6 +6,11 @@ import { Link, Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Post = () => {
+  const loginAdmin = localStorage.getItem("admin");
+  if (loginAdmin == null) {
+    window.location.href = "/admin/loginadmin";
+  }
+
   const navigate = useNavigate();
 
   const { list, getData } = useContext(Context);
@@ -17,7 +22,7 @@ const Post = () => {
   };
 
   const handleOnOff = async (id, value) => {
-    const response = await axios.patch(`http://localhost:3004/uploads/${id}`, {
+    await axios.patch(`http://localhost:3004/uploads/${id}`, {
       value: value,
     });
     toast.success("Cập nhật thành công !");
@@ -55,20 +60,20 @@ const Post = () => {
         <div className="flex border-[1px] border-stone-300">
           <div>
             <div className="flex">
-              <p className="w-[50px] py-2 flex items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
+              <p className="w-[50px] py-2 flex items-center border-stone-300 px-4 font-bold text-[18px]">
                 ID
               </p>
-              <p className="w-[354px] py-2 flex items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
+              <p className="w-[354px] py-2 flex items-center border-stone-300 px-4 font-bold text-[18px]">
                 Image
               </p>
-              <p className="w-[217px] py-2  items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
-                Loại
+              <p className="w-[217px] py-2  items-center border-stone-300 px-4 font-bold text-[18px]">
+                Type
               </p>
-              <p className="w-[217px] py-2  items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
+              <p className="w-[217px] py-2  items-center border-stone-300 px-4 font-bold text-[18px]">
                 Title
               </p>
-              <p className="w-60 py-2 flex items-center border-l-[1px] border-stone-300 px-4 font-bold text-[18px]">
-                Content
+              <p className="w-[217px] py-2 flex items-center border-stone-300 px-4 font-bold text-[18px]">
+                Price
               </p>
               <p className=" py-2 flex items-center pr-4  text-white px-4 rounded-md m-2"></p>
               <p className=" py-2 flex items-center pr-4  text-white px-4 rounded-md m-2"></p>
@@ -92,14 +97,14 @@ const Post = () => {
                     <p className="w-[354px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
                       <img className="w-24" src={item.image} />
                     </p>
-                    <p className="flex-1 w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
+                    <p className="w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
                       {item.type}
                     </p>
-                    <p className="flex-1 w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
+                    <p className="w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
                       {item.title}
                     </p>
-                    <p className="flex-1 w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
-                      {item.content}
+                    <p className="w-[217px] py-2 flex items-center border-l-[1px] border-stone-300 px-4">
+                      {item.price}
                     </p>
                     <div className="flex items-center">
                       <form className="flex gap-2">
@@ -110,7 +115,7 @@ const Post = () => {
                           defaultChecked={item.value == "on"}
                           onClick={(e) => handleOnOff(item.id, e.target.value)}
                         />
-                        Bật
+                        Còn hàng
                         <input
                           type="radio"
                           name="onoff"
@@ -118,7 +123,7 @@ const Post = () => {
                           defaultChecked={item.value == "off"}
                           onClick={(e) => handleOnOff(item.id, e.target.value)}
                         />
-                        Tắt
+                        Hết hàng
                       </form>
                       <p
                         onClick={() => handleEdit(item.id)}

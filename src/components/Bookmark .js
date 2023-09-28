@@ -6,98 +6,32 @@ import axios from "axios";
 
 const Bookmark = () => {
   const navigate = useNavigate();
-  const { list, idLogin } = useContext(Context);
-  const [reload, setReload] = useState([]);
+  const { list, idLogin, voucherData } = useContext(Context);
+  const [reload, setReload] = useState("");
   const [newArrayCart, setNewArrayCart] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [idCart, setIdCart] = useState(null);
   const [address, setAddress] = useState("");
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState([]);
+  const [voucherInput, setVoucherInput] = useState("");
   const [styleBuy, setStyleBuy] = useState("hidden");
   const [styleNoCart, setStyleNoCart] = useState("block");
-  const [selectePay, setSelectPay] = useState("pay for home");
-  // Lấy data local bookmark
-  const bookmarkArray = localStorage.getItem("bookmark")
-    ? JSON.parse(localStorage.getItem("bookmark"))
-    : [];
+  const [selectePay, setSelectPay] = useState("Thanh toán khi nhận hàng");
 
   const cartArray = localStorage.getItem("cartItems")
     ? JSON.parse(localStorage.getItem("cartItems"))
     : [];
 
-  // Tìm các sp trùng với id có trên localStorage đã lưu
+  // XỬ LÝ TÌM CÁC SẢN PHẨM CÓ TRONG GIỎ HÀNG TỪ LOCALSTR
   const results = cartArray.map((item) => {
-    const listFind = list?.find((img) => {
-      return img.id === item.id;
+    const listFind = list?.find((itemList) => {
+      return itemList.id === item.id;
     });
     return listFind;
   });
-  // Lấy data local
-
-  console.log("results", results);
-  // Tìm các sp trùng với id có trên localStorage đã lưu
-
-  const handleDelele = async (id) => {
-    // Lọc ra các item khác với id click vào để xóa
-    const arrUnsave = results?.filter((item) => {
-      return item.id !== id;
-    });
-
-    // Tạo mảng mới chứa các id được lấy ra từ mảng arrUnsave để đưa vào localStorage
-    const newBookmark = arrUnsave?.map((item) => {
-      return item.id;
-    });
-
-    // Lọc ra các item khác với id click vào để xóa khỏi giỏ hàng
-    const newCartArray = cartArray.filter((item) => {
-      return item.id !== id;
-    });
-
-    // Lưu newBookmark và newCartArray vào localStorage và sử dụng async/await
-    await localStorage.setItem("bookmark", JSON.stringify(newBookmark));
-    await localStorage.setItem("cartItems", JSON.stringify(newCartArray));
-
-    // Cập nhật trạng thái và hiển thị toast
-    setReload(newBookmark);
-    toast.success("Đã bỏ lưu bài viết");
-  };
-
-  // Handle mua hàng
-
-  const handleClickBuy = async () => {
-    const cartArray = localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
-      : [];
-    const response = await axios.post("http://localhost:3004/carts", {
-      userId: idLogin,
-      products: cartArray,
-      totalPrice: total,
-      address: address,
-      name: name,
-      phone: phone,
-    });
-    if (response.status === 201) {
-      toast.success("Đặt hàng thành công !");
-      navigate("/");
-    }
-
-    localStorage.removeItem("cartItems");
-    localStorage.removeItem("bookmark");
-    setReload("ss");
-  };
-
-  // Tìm index sản phẩm cần cập nhật số lượng trong local
-  const updatedProductIndex = cartArray.findIndex((item) => item.id === idCart);
-  if (updatedProductIndex !== -1) {
-    // Tạo bản sao của mảng cartArray để tránh thay đổi trực tiếp
-    const updatedCartArray = [...cartArray];
-    // Cập nhật số lượng của sản phẩm bằng cách sửa sl của index bấm vào
-    updatedCartArray[updatedProductIndex].quantity = parseInt(quantity);
-
-    // Lưu updatedCartArray vào localStorage
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartArray));
-  }
+  // --------------
+  // XỬ LÝ NÚT INPUT TĂNG GIẢM SỐ LƯỢNG
 
   // Bắt dữ liệu từ input
 
@@ -115,27 +49,79 @@ const Bookmark = () => {
     setQuantity(updatedQuantity);
     setIdCart(updatedIdCart);
   };
+
+  // Tìm index sản phẩm cần cập nhật số lượng trong local tìm bằng idCart
+  const updatedProductIndex = cartArray.findIndex((item) => item.id === idCart);
+
+  if (updatedProductIndex !== -1) {
+    // Tạo bản sao của mảng cartArray để tránh thay đổi trực tiếp
+    const updatedCartArray = [...cartArray];
+    // Cập nhật số lượng của sản phẩm bằng cách sửa sl của index bấm vào
+    updatedCartArray[updatedProductIndex].quantity = parseInt(quantity);
+
+    // Lưu updatedCartArray vào localStorage
+    localStorage.setItem("cartItems", JSON.stringify(updatedCartArray));
+  }
+
   // Trả dữ liệu về input defaltValue
   const getQuantityForItem = (itemId) => {
     // Tìm sản phẩm trong cartItems dựa vào itemId
     const cartItem = cartArray.find((item) => item.id === itemId);
-
+    // setReload(cartItem);
     // Nếu tìm thấy sản phẩm, trả về số lượng của nó; ngược lại, trả về 1
     return cartItem ? cartItem.quantity : 1;
   };
 
-  // Tinh tong so tien
-  let total = 0;
-  cartArray.map((item) => {
-    console.log(item?.price);
-    total += parseFloat(item?.price) * parseFloat(item?.quantity);
-    return total;
-  });
+  // -------------
+
+  const handleDelele = async (id) => {
+    // Lọc ra các item khác với id click vào để xóa khỏi giỏ hàng
+    const newCartArray = cartArray.filter((item) => {
+      return item.id !== id;
+    });
+
+    await localStorage.setItem("cartItems", JSON.stringify(newCartArray));
+
+    setReload(newCartArray);
+    toast.warning("Đã xóa sản phẩm");
+  };
+
+  // Handle mua hàng
+
+  const handleClickBuy = async (e) => {
+    e.preventDefault();
+
+    if (address.length < 1 || name.length < 1 || phone.length < 1) {
+      toast.warning("Vui lòng nhập thông tin đầy đủ");
+      return;
+    }
+    const cartArray = localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : [];
+
+    const response = await axios.post("http://localhost:3004/carts", {
+      userId: idLogin,
+      products: cartArray,
+      totalPrice: total,
+      address: address,
+      name: name,
+      phone: phone,
+      pay: selectePay,
+      confirm: "Chờ xác nhận",
+    });
+    if (response.status === 201) {
+      toast.success("Đặt hàng thành công !");
+      localStorage.removeItem("cartItems");
+      navigate("/carts/order");
+    }
+
+    setReload("ss");
+  };
 
   const buttonBuy = ` ${styleBuy} h-10 w-56 justify-center  py-2 font-medium text-lg flex items-center bg-green-700 text-white px-6 rounded-3xl m-2 cursor-pointer hover:bg-red-800`;
   const infoNoCart = ` ${styleNoCart} flex justify-center font-bold text-xl my-8`;
   useEffect(() => {
-    if (bookmarkArray.length != 0) {
+    if (cartArray.length != 0) {
       setStyleBuy("block");
       setStyleNoCart("hidden");
     } else {
@@ -143,6 +129,31 @@ const Bookmark = () => {
       setStyleNoCart("block");
     }
   }, [reload]);
+
+  // Voucher
+
+  let priceVoucher = 0;
+  let total = 0;
+  let tongtien = 0;
+
+  const findVoucher = voucherData.find((item) => item.code == voucherInput);
+
+  if (findVoucher) {
+    priceVoucher = findVoucher.deals;
+    cartArray.map((item) => {
+      tongtien += parseFloat(item?.price) * parseFloat(item?.quantity);
+      return tongtien;
+    });
+    total = tongtien - priceVoucher;
+    if (total < 0) {
+      total = 0;
+    }
+  } else {
+    cartArray.map((item) => {
+      total += parseFloat(item?.price) * parseFloat(item?.quantity);
+      return total;
+    });
+  }
 
   return (
     <div>
@@ -158,7 +169,7 @@ const Bookmark = () => {
               <img className="h-24 flex-1" src={item?.image} alt="" />
               <div className="w-1/2">{item?.title}</div>
               <div className="mr-3 flex-1 flex gap-2 text-lg font-medium">
-                {parseInt(item.price).toLocaleString("vi-VN")}
+                {parseInt(item?.price).toLocaleString("vi-VN")}
                 <div>đ</div>
               </div>
               <div className="flex-1">
@@ -167,7 +178,7 @@ const Bookmark = () => {
                   type="number"
                   name="quantity"
                   min="1"
-                  defaultValue={getQuantityForItem(item.id)}
+                  defaultValue={getQuantityForItem(item?.id)}
                   onChange={(e) => handleInputChange(e, item.id)}
                 />
               </div>
@@ -185,48 +196,81 @@ const Bookmark = () => {
             Tổng tiền: {parseInt(total).toLocaleString("vi-VN")} Đ
           </h1>
         </div>
-        <div className="w-1/2 flex flex-col gap-4">
-          <div className="font-bold">THỜI GIAN GIAO HÀNG: Giao Ngay</div>
-          <div className="font-bold">Nhập thông tin giao hàng</div>
-          <input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="outline-none border-b-2 text-base w-full h-8"
-            type="text"
-            placeholder="Nhập địa chỉ giao hàng"
-          />
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="outline-none border-b-2 text-base w-full h-8"
-            type="text"
-            placeholder="Nhập họ tên"
-          />
-          <input
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="outline-none border-b-2 text-base w-full h-8"
-            type="number"
-            placeholder="Nhập số điện thoại"
-          />
-          <div className="flex">
+        <form
+          onSubmit={handleClickBuy}
+          className="w-1/2 flex flex-col items-center"
+        >
+          <div className="w-full flex flex-col gap-4">
+            <div className="font-bold">THỜI GIAN GIAO HÀNG: Giao Ngay</div>
+            <div className="font-bold">Nhập thông tin giao hàng</div>
             <input
-              type="radio"
-              id="drink"
-              name="category"
-              value="pay for home"
-              className="mr-2"
-              onChange={(e) => setSelectPay(e.target.value)}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="outline-none border-b-2 text-base w-full h-8"
+              type="text"
+              placeholder="Nhập địa chỉ giao hàng"
             />
-            <label className="cursor-pointer" htmlFor="drink">
-              <h1 className="text-lg py-1 px-4">Thanh Toán Khi Nhận Hàng</h1>
-            </label>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="outline-none border-b-2 text-base w-full h-8"
+              type="text"
+              placeholder="Nhập họ tên"
+            />
+            <input
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="outline-none border-b-2 text-base w-full h-8"
+              type="number"
+              placeholder="Nhập số điện thoại"
+            />
+            <div className="flex">
+              <div className="flex flex-1 items-center">
+                <input
+                  type="radio"
+                  id="drink"
+                  name="category"
+                  value="Thanh toán khi nhận hàng"
+                  className="mr-2"
+                  checked
+                  onChange={(e) => setSelectPay(e.target.value)}
+                />
+                <label className="cursor-pointer" htmlFor="drink">
+                  <h1 className="text-lg py-1 px-4">
+                    Thanh Toán Khi Nhận Hàng
+                  </h1>
+                </label>
+              </div>
+              <div className="flex items-center flex-1">
+                <input
+                  value={voucherInput}
+                  onChange={(e) => setVoucherInput(e.target.value)}
+                  className="outline-none border-b-2 text-base w-full h-8"
+                  type="text"
+                  placeholder="Nhập voucher (nếu có)"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-
-        <h1 onClick={handleClickBuy} className={buttonBuy}>
-          Tiến hành thanh toán
-        </h1>
+          {idLogin && (
+            <button
+              type="submit"
+              onClick={handleClickBuy}
+              className={buttonBuy}
+            >
+              Tiến hành đặt hàng
+            </button>
+          )}
+        </form>
+        {!idLogin && (
+          <button className="flex text-xl">
+            <p className="mr-1">Vui lòng </p>
+            <Link className="font-bold cursor-pointer" to="/login">
+              Đăng nhập
+            </Link>
+            <p className="ml-1">trước khi thanh toán</p>
+          </button>
+        )}
       </div>
     </div>
   );

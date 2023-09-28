@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const EditUser = () => {
+  const loginAdmin = localStorage.getItem("admin");
+  if (loginAdmin == null) {
+    window.location.href = "/admin/loginadmin";
+  }
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -13,16 +17,14 @@ const EditUser = () => {
 
   const obj = listUser.find((item) => item.id == id);
 
-  const [userName, setUserName] = useState(obj.email);
-  const [password, setPassword] = useState(obj.password);
+  const [userName, setUserName] = useState(obj ? obj.email : "");
+  const [password, setPassword] = useState(obj ? obj.password : "");
 
   console.log("user", userName);
   console.log("pass", password);
   const updateData = async () => {
     try {
-      // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
-
-      const response = await axios.put(`http://localhost:3004/user/${id}`, {
+      await axios.put(`http://localhost:3004/user/${id}`, {
         email: userName,
         password: password,
       });
@@ -33,12 +35,14 @@ const EditUser = () => {
     }
   };
 
+  useEffect(() => {}, [listUser]);
+
   const handleClick = () => {
     updateData();
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <div>EditUser</div>
       <div>Edit</div>
       <p>ID</p>

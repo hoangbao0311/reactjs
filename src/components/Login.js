@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import logo from "../image/logo_2.png";
 
 const Login = () => {
   const email = "";
@@ -33,10 +34,7 @@ const Login = () => {
 
         if (isLoggedIn) {
           toast.success("Đăng nhập thành công");
-          //   Chuyển trang khi login thành công
-          setTimeout(function () {
-            window.location.href = "/";
-          }, 1000);
+          window.location.href = "/";
         } else {
           toast.error("Đăng nhập không thành công - Sai email hoặc mật khẩu");
         }
@@ -50,14 +48,11 @@ const Login = () => {
     <div className="flex justify-center bg-[#E9E9E9] h-screen">
       <div className=" bg-white  rounded-3xl w-[484px] flex flex-col items-center justify-center h-fit py-7 pb-9 mt-7 gap-4">
         <div>
-          <img
-            className="w-20 h-20"
-            src="/image/Pinterest Logo _ Real Company _ Alphabet, Letter P Logo.png"
-          />
+          <img className="w-20 h-20" src={logo} />
         </div>
         <div>
           <h1 className="text-[32px] px-4 text-center font-semibold">
-            Chào mừng bạn đến với Pinterest
+            Đăng Nhập
           </h1>
         </div>
         <div>
@@ -83,7 +78,7 @@ const Login = () => {
         <div>Quên mật khẩu ?</div>
         <div>
           <button
-            className="w-60 h-10 bg-[#E60023] text-white rounded-3xl font-bold"
+            className="w-60 h-10 bg-[#0C713D] text-white border-[#0C713D] border-[1px] rounded-3xl font-bold mt-4 hover:opacity-95"
             type="submit"
             onClick={submitHanlde}
           >

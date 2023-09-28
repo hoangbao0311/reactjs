@@ -7,61 +7,67 @@ const User = () => {
   const { listUser, idLogin } = useContext(Context);
   const navigate = useNavigate();
 
-  const id = idLogin;
+  const nameLogin = localStorage.getItem("isLogin");
 
-  const obj = listUser.find((item) => item.id == id);
-  console.log("obj", obj);
-  const [userName, setUserName] = useState(obj ? obj.email : "");
-  const [password, setPassword] = useState(obj ? obj.email : "");
+  const [password, setPassword] = useState("");
+  const [comfirm, setConfirm] = useState("");
 
-  console.log("user", userName);
-  console.log("pass", password);
-  const updateData = async () => {
-    try {
-      // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
-
-      const response = await axios.put(`http://localhost:3004/user/${id}`, {
-        email: userName,
-        password: password,
-      });
-      toast.success("Cập nhật thành công !");
-    } catch (error) {
-      console.error("Lỗi khi cập nhật dữ liệu:", error);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (password.length < 1) {
+      toast.warning("Không được để trống password");
+      return;
+    } else if (password !== comfirm) {
+      toast.warning("Mật khẩu và xác nhận mật khẩu phải giống nhau");
+      return;
+    } else {
+      try {
+        await axios.patch(`http://localhost:3004/user/${idLogin}`, {
+          password: password,
+        });
+        navigate("/");
+        toast.success("Cập nhật tài khoảng thành công");
+      } catch (error) {
+        toast.warning("Có lỗi!");
+        console.error("Lỗi khi cập nhật dữ liệu:", error);
+      }
     }
-  };
-
-  const handleClick = () => {
-    localStorage.setItem("isLogin", userName);
-    updateData();
-    window.location.reload("/");
   };
 
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-2">
-        <p>UserName</p>
-        <input
-          type="text"
-          name=""
-          onChange={(e) => setUserName(e.target.value)}
-          defaultValue={obj ? obj.email : ""}
-          className="border-[1px] border-[#0C713D] outline-none py-1 px-3 rounded-md"
-        />
-        <p>Password</p>
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          name=""
-          defaultValue={obj ? obj.password : ""}
-          className="border-[1px] border-[#0C713D] outline-none py-1 px-3 rounded-md"
-        />
-        <button
-          className="border-[1px] border-[#0C713D] py-1 px-3 hover:bg-[#0C713D] hover:text-white rounded-md "
-          onClick={handleClick}
-          type=""
-        >
-          Lưu
-        </button>
+        <form onSubmit={onSubmit} className="flex flex-col gap-2">
+          <p>UserName</p>
+          <input
+            type="text"
+            name=""
+            disabled
+            defaultValue={nameLogin}
+            className="border-[1px] border-[#0C713D] outline-none py-1 px-3 rounded-md"
+          />
+          <p>Password</p>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            name=""
+            className="border-[1px] border-[#0C713D] outline-none py-1 px-3 rounded-md"
+          />
+          <p>Confirm Password</p>
+          <input
+            onChange={(e) => setConfirm(e.target.value)}
+            type="password"
+            name=""
+            className="border-[1px] border-[#0C713D] outline-none py-1 px-3 rounded-md"
+          />
+          <button
+            className="border-[1px] border-[#0C713D] py-1 px-3 hover:bg-[#0C713D] hover:text-white rounded-md "
+            onClick={onSubmit}
+            type="submit"
+          >
+            Lưu
+          </button>
+        </form>
       </div>
     </div>
   );
