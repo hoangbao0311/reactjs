@@ -83,11 +83,15 @@ const Header = () => {
           } mt-4 lg:mt-0 w-full lg:justify-around`}
         >
           <ul className="lg:flex space-x-4 items-center lg:justify-between">
-            <li className="hidden lg:block">
-              <Link to="/">
-                <img className="h-12 w-12 " src={Logo} />
-              </Link>
+            <li className="hidden lg:block ">
+              <div className="flex gap-3">
+                <Link to="/">
+                  <img className="h-12 w-12 " src={Logo} />
+                </Link>
+                <Search />
+              </div>
             </li>
+
             <li>
               <Link
                 className="h-12 min-w-[60px] text-base px-4 font-bold flex items-center justify-center font-[inherit]"

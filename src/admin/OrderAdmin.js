@@ -5,11 +5,6 @@ import { toast } from "react-toastify";
 
 const OrderAdmin = () => {
   const [type, setType] = useState("Đơn Chưa Xác Nhận");
-
-  const loginAdmin = localStorage.getItem("admin");
-  if (loginAdmin == null) {
-    window.location.href = "/admin/loginadmin";
-  }
   const { listProduct, list, getCart } = useContext(Context);
 
   useEffect(() => {

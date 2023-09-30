@@ -26,8 +26,8 @@ const Search = () => {
 
   return (
     <div className=" flex items-center ">
-      <div className="w-1/2 relative">
-        <div className="flex w-1/2 border-[1px] border-[#0C713D] rounded-lg">
+      <div className=" relative">
+        <div className="flex  border-[1px] border-[#0C713D] rounded-lg">
           <span className="h-10 pl-4  flex items-center justify-center rounded-l-[20px] text-gray-500 py-6">
             <BiSearch size={24} />
           </span>
@@ -70,7 +70,7 @@ const Search = () => {
           </>
         )}
         {isFocused && (
-          <div className="flex flex-col h-auto absolute bg-slate-50 pt-3 w-1/2">
+          <div className="flex flex-col h-auto absolute bg-slate-50 pt-3">
             <p
               onClick={() => setIsFocused(false)}
               className="text-end text-[24px] mr-5 text-red-500 font-bold cursor-pointer"

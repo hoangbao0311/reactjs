@@ -4,9 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 export const User = () => {
   const loginAdmin = localStorage.getItem("admin");
-  if (loginAdmin == null) {
-    window.location.href = "/admin/loginadmin";
-  }
 
   const [list, setList] = useState([]);
   const navigate = useNavigate();

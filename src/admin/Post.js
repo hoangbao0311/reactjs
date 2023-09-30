@@ -7,9 +7,6 @@ import { toast } from "react-toastify";
 
 const Post = () => {
   const loginAdmin = localStorage.getItem("admin");
-  if (loginAdmin == null) {
-    window.location.href = "/admin/loginadmin";
-  }
 
   const navigate = useNavigate();
 

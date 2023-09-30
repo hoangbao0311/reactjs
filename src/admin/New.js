@@ -6,11 +6,6 @@ import { Context } from "../context/context";
 import { toast } from "react-toastify";
 
 function New() {
-  const loginAdmin = localStorage.getItem("admin");
-  if (loginAdmin == null) {
-    window.location.href = "/admin/loginadmin";
-  }
-
   const navigate = useNavigate();
   const { setReload } = useContext(Context);
   const isLogin = localStorage.getItem("isLogin");

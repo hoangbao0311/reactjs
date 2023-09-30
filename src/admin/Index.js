@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import Login from "./Login";
 
 const Index = () => {
   const loginAdmin = localStorage.getItem("admin");
@@ -74,7 +75,13 @@ const Index = () => {
             </div>
 
             <div className="flex-1 p-4 h-screen">
-              <Outlet />
+              {loginAdmin ? (
+                <Outlet />
+              ) : (
+                <div>
+                  <Login />
+                </div>
+              )}
             </div>
           </div>
         </div>
