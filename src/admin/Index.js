@@ -24,7 +24,7 @@ const Index = () => {
     <div>
       <div>
         <div>
-          <div className="flex  ">
+          <div className="flex h-full">
             <div className="w-44 bg-blue-500">
               <div className="p-4 text-white">
                 <h1 className="text-2xl font-semibold">Admin Panel</h1>
@@ -56,6 +56,14 @@ const Index = () => {
                       Order
                     </Link>
                   </li>
+                  <li className="mb-2">
+                    <Link
+                      className="block p-4 text-white hover:bg-blue-600"
+                      to="/admin/voucher"
+                    >
+                      Voucher
+                    </Link>
+                  </li>
                   <li className={isLoginStyle}>
                     <Link
                       className="block p-4 text-white hover:bg-blue-600"
@@ -74,7 +82,7 @@ const Index = () => {
               </nav>
             </div>
 
-            <div className="flex-1 p-4 h-screen">
+            <div className="flex-1 p-4 h-full">
               {loginAdmin ? (
                 <Outlet />
               ) : (

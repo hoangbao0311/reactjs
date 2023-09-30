@@ -25,6 +25,7 @@ const OrderAdmin = () => {
         confirm: "Đã xác nhận",
       });
       toast.success("Đã xác nhận đơn hàng !");
+      getCart();
     } catch (error) {
       toast.error("Đã xảy ra lỗi khi cập nhật dữ liệu");
     }
@@ -36,13 +37,14 @@ const OrderAdmin = () => {
         confirm: "Đã hủy",
       });
       toast.warning("Đã hủy đơn hàng !");
+      getCart();
     } catch (error) {
       toast.error("Đã xảy ra lỗi khi cập nhật dữ liệu");
     }
   };
 
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <select
         onChange={(e) => setType(e.target.value)}
         className="rounded-[4px] border h-[40px] w-1/4 pl-[10px]"
@@ -51,7 +53,7 @@ const OrderAdmin = () => {
         <option value={"Đơn Chưa Xác Nhận"}>Đơn Chưa Xác Nhận</option>
         <option value={"Đơn Đã Xác Nhận"}>Đơn Đã Xác Nhận</option>
       </select>
-      <div className="h-screen">
+      <div className="h-full">
         {type == "Đơn Chưa Xác Nhận" && (
           <div>
             <div className="flex-1">

@@ -6,12 +6,11 @@ import { Link, Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Post = () => {
-  const loginAdmin = localStorage.getItem("admin");
-
   const navigate = useNavigate();
 
   const { list, getData } = useContext(Context);
   const [search, setSearch] = useState("");
+
   const [productStates, setProductStates] = useState("");
 
   const handleEdit = (id) => {
@@ -22,6 +21,7 @@ const Post = () => {
     await axios.patch(`http://localhost:3004/uploads/${id}`, {
       value: value,
     });
+    getData();
     toast.success("Cập nhật thành công !");
     navigate("/admin/post/");
   };
@@ -47,8 +47,9 @@ const Post = () => {
         <div className="h-12 max-w-[200px] border-[1px] border-green-600 text-white bg-green-600 mr-5 p-2 text-base px-4 font-bold font-[inherit]">
           <Link to="/admin/new">Thêm sản phẩm mới</Link>
         </div>
+
         <input
-          className="w-full h-10 text-[20px] outline-none pl-3"
+          className="w-full h-10 text-[20px] outline-none pl-3 border-[1px] border-green-800 my-2"
           type="text"
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Tìm kiếm theo title"

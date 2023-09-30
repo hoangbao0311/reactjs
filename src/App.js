@@ -18,6 +18,7 @@ import Order from "./components/Order";
 import OrderAdmin from "./admin/OrderAdmin";
 import Tea from "./components/Tea";
 import Cafe from "./components/Cafe";
+import Voucher from "./admin/Voucher";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -42,6 +43,7 @@ function App() {
             <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/loginadmin" element={<LoginAdmin />} />
             <Route path="/admin/post/" element={<Post />} />
+            <Route path="/admin/voucher" element={<Voucher />} />
             <Route path="/admin/oder/" element={<OrderAdmin />} />
             <Route path="/admin/post/edit/:id" element={<EditPost />} />
             <Route path="/admin/user/edit/:id" element={<EditUser />} />
