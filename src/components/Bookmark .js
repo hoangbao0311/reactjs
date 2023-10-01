@@ -64,13 +64,19 @@ const Bookmark = () => {
   }
 
   // Trả dữ liệu về input defaltValue
+  let cartItem = {};
+
   const getQuantityForItem = (itemId) => {
     // Tìm sản phẩm trong cartItems dựa vào itemId
-    const cartItem = cartArray.find((item) => item.id === itemId);
-    // setReload(cartItem);
+    cartItem = cartArray.find((item) => item.id === itemId);
+
     // Nếu tìm thấy sản phẩm, trả về số lượng của nó; ngược lại, trả về 1
     return cartItem ? cartItem.quantity : 1;
   };
+
+  useEffect(() => {
+    getQuantityForItem();
+  }, [cartItem]);
 
   // -------------
 
@@ -172,16 +178,21 @@ const Bookmark = () => {
                 {parseInt(item?.price).toLocaleString("vi-VN")}
                 <div>đ</div>
               </div>
-              <div className="flex-1">
-                <input
-                  className="text-lg text-[#0C713D] border-[#0C713D] border-[1px] p-1 px-2 w-16 h-8 outline-none"
-                  type="number"
-                  name="quantity"
-                  min="1"
-                  defaultValue={getQuantityForItem(item?.id)}
-                  onChange={(e) => handleInputChange(e, item.id)}
-                />
-              </div>
+              {cartItem ? (
+                <div className="flex-1">
+                  <input
+                    className="text-lg text-[#0C713D] border-[#0C713D] border-[1px] p-1 px-2 w-16 h-8 outline-none"
+                    type="number"
+                    name="quantity"
+                    min="1"
+                    defaultValue={getQuantityForItem(item?.id)}
+                    onChange={(e) => handleInputChange(e, item.id)}
+                  />
+                </div>
+              ) : (
+                <div>loading ...</div>
+              )}
+
               <div
                 className="flex-1 h-8 w-16 justify-center py-2 font-medium text-lg flex items-center bg-red-700 text-white rounded-3xl m-2 cursor-pointer hover:bg-red-800"
                 onClick={() => handleDelele(item.id)}
