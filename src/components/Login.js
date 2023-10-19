@@ -15,7 +15,7 @@ const Login = () => {
     let isLoggedIn = false;
 
     axios
-      .get("http://localhost:3004/user")
+      .get("https://frt6fs-3004.csb.app/user")
       .then((response) => {
         // Xử lý dữ liệu khi yêu cầu thành công
         const data = response.data;

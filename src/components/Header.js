@@ -30,6 +30,7 @@ const Header = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <div className="">
       <div className="bg-white text-black p-4 w-full ">

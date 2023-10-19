@@ -18,7 +18,7 @@ const Post = () => {
   };
 
   const handleOnOff = async (id, value) => {
-    await axios.patch(`http://localhost:3004/uploads/${id}`, {
+    await axios.patch(`https://frt6fs-3004.csb.app/uploads/${id}`, {
       value: value,
     });
     getData();
@@ -29,7 +29,7 @@ const Post = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3004/uploads/${id}`
+        `https://frt6fs-3004.csb.app/uploads/${id}`
       );
       if (response.status === 200) {
         getData();

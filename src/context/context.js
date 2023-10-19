@@ -17,14 +17,14 @@ function MyContext({ children }) {
   // Get Data Upload
 
   const getData = async () => {
-    const response = await axios.get("http://localhost:3004/uploads");
+    const response = await axios.get("https://frt6fs-3004.csb.app/uploads");
     if (response.status === 200) {
       setList(response.data);
     }
   };
 
   const getCart = async () => {
-    const response = await axios.get("http://localhost:3004/carts");
+    const response = await axios.get("https://frt6fs-3004.csb.app/carts");
     if (response.status === 200) {
       setListProduct(response.data);
     }
@@ -33,14 +33,14 @@ function MyContext({ children }) {
   // Get data User
 
   const getDataUser = async () => {
-    const response = await axios.get("http://localhost:3004/user");
+    const response = await axios.get("https://frt6fs-3004.csb.app/user");
     if (response.status === 200) {
       setListUser(response.data);
     }
   };
 
   const getVoucher = async () => {
-    const response = await axios.get("http://localhost:3004/voucher");
+    const response = await axios.get("https://frt6fs-3004.csb.app/voucher");
     if (response.status === 200) {
       setVoucherData(response.data);
     }

@@ -24,7 +24,7 @@ const EditUser = () => {
   console.log("pass", password);
   const updateData = async () => {
     try {
-      await axios.put(`http://localhost:3004/user/${id}`, {
+      await axios.put(`https://frt6fs-3004.csb.app/user/${id}`, {
         email: userName,
         password: password,
       });

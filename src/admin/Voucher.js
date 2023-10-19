@@ -9,7 +9,7 @@ const Voucher = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:3004/voucher");
+      const response = await axios.get("https://frt6fs-3004.csb.app/voucher");
       if (response.status === 200) {
         setListVoucher(response.data);
       }
@@ -21,7 +21,7 @@ const Voucher = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3004/voucher/${id}`
+        `https://frt6fs-3004.csb.app/voucher/${id}`
       );
       if (response.status === 200) {
         getData();
@@ -32,7 +32,7 @@ const Voucher = () => {
   };
 
   const handleUpDiscount = async () => {
-    const response = await axios.post("http://localhost:3004/voucher/", {
+    const response = await axios.post("https://frt6fs-3004.csb.app/voucher/", {
       code: discount,
       deals: parseFloat(deal),
     });

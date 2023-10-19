@@ -21,7 +21,7 @@ const OrderAdmin = () => {
 
   const updateData = async (id) => {
     try {
-      await axios.patch(`http://localhost:3004/carts/${id}`, {
+      await axios.patch(`https://frt6fs-3004.csb.app/carts/${id}`, {
         confirm: "Đã xác nhận",
       });
       toast.success("Đã xác nhận đơn hàng !");
@@ -33,7 +33,7 @@ const OrderAdmin = () => {
 
   const deleteData = async (id) => {
     try {
-      await axios.patch(`http://localhost:3004/carts/${id}`, {
+      await axios.patch(`https://frt6fs-3004.csb.app/carts/${id}`, {
         confirm: "Đã hủy",
       });
       toast.warning("Đã hủy đơn hàng !");
@@ -93,6 +93,12 @@ const OrderAdmin = () => {
                       <div className="font-bold text-xl text-green-600 border-t-2 flex flex-col gap-2">
                         <div className="text-base text-black">
                           Hình thức thanh toán: {order.pay}
+                        </div>
+                        <div className="text-base text-black">
+                          Địa chỉ: {order.address}
+                        </div>
+                        <div className="text-base text-black">
+                          Phone: {order.phone}
                         </div>
                         <div>Trạng thái đơn hàng: {order.confirm}</div>
                         Tổng tiền:{" "}
@@ -157,6 +163,12 @@ const OrderAdmin = () => {
                     <div className="font-bold text-xl text-green-600 border-t-2 flex flex-col gap-2">
                       <div className="text-base text-black">
                         Hình thức thanh toán: {order.pay}
+                      </div>
+                      <div className="text-base text-black">
+                        Địa chỉ: {order.address}
+                      </div>
+                      <div className="text-base text-black">
+                        Phone: {order.phone}
                       </div>
                       <div>Trạng thái đơn hàng: {order.confirm}</div>
                       Tổng tiền:{" "}

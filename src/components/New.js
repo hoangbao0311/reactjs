@@ -15,7 +15,7 @@ function New() {
   const [price, setPrice] = useState(0);
   const [type, setType] = useState("");
   const setNewUser = async (e) => {
-    const response = await axios.post("http://localhost:3004/uploads", {
+    const response = await axios.post("https://frt6fs-3004.csb.app/uploads", {
       image: baseImage,
       title: title,
       content: content,

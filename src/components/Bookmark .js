@@ -8,7 +8,6 @@ const Bookmark = () => {
   const navigate = useNavigate();
   const { list, idLogin, voucherData } = useContext(Context);
   const [reload, setReload] = useState("");
-  const [newArrayCart, setNewArrayCart] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [idCart, setIdCart] = useState(null);
   const [address, setAddress] = useState("");
@@ -22,14 +21,6 @@ const Bookmark = () => {
   const cartArray = localStorage.getItem("cartItems")
     ? JSON.parse(localStorage.getItem("cartItems"))
     : [];
-
-  // XỬ LÝ TÌM CÁC SẢN PHẨM CÓ TRONG GIỎ HÀNG TỪ LOCALSTR
-  const results = cartArray.map((item) => {
-    const listFind = list?.find((itemList) => {
-      return itemList.id === item.id;
-    });
-    return listFind;
-  });
 
   const handleRenderCart = () => {
     return cartArray?.map((item, index) => {
@@ -72,8 +63,6 @@ const Bookmark = () => {
       );
     });
   };
-  // --------------
-  // XỬ LÝ NÚT INPUT TĂNG GIẢM SỐ LƯỢNG
 
   // Bắt dữ liệu từ input
 
@@ -83,10 +72,7 @@ const Bookmark = () => {
     // thì cập nhật updatedQuantity thành giá trị mới từ trường input (value),
     // nếu không giữ nguyên giá trị cũ của quantity.
     const updatedQuantity = name === "quantity" ? value : quantity;
-    // Kiểm tra nếu trường input là "idCart" (ID sản phẩm trong giỏ hàng)
-    // thì cập nhật updatedIdCart thành giá trị mới từ trường input (value),
-    // nếu không giữ nguyên giá trị itemId được truyền vào.
-    const updatedIdCart = name === "idCart" ? value : itemId;
+    const updatedIdCart = itemId;
 
     setQuantity(updatedQuantity);
     setIdCart(updatedIdCart);
@@ -147,7 +133,7 @@ const Bookmark = () => {
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [];
 
-    const response = await axios.post("http://localhost:3004/carts", {
+    const response = await axios.post("https://frt6fs-3004.csb.app/carts", {
       userId: idLogin,
       products: cartArray,
       totalPrice: total,
@@ -208,42 +194,6 @@ const Bookmark = () => {
       <Link to="/carts/order">Sản phẩm đã đặt hàng</Link>
       <div className={infoNoCart}>Chưa có sản phẩm nào trong giỏ</div>
       <div className="flex gap-5 flex-col items-center">
-        {/* {results?.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className="h-28 border-t-[1px] border-b-slate-700 flex w-1/2 justify-between items-center "
-            >
-              <img className="h-24 flex-1" src={item?.image} alt="" />
-              <div className="w-1/2">{item?.title}</div>
-              <div className="mr-3 flex-1 flex gap-2 text-lg font-medium">
-                {parseInt(item?.price).toLocaleString("vi-VN")}
-                <div>đ</div>
-              </div>
-              {cartItem ? (
-                <div className="flex-1">
-                  <input
-                    className="text-lg text-[#0C713D] border-[#0C713D] border-[1px] p-1 px-2 w-16 h-8 outline-none"
-                    type="number"
-                    name="quantity"
-                    min="1"
-                    defaultValue={getQuantityForItem(item?.id)}
-                    onChange={(e) => handleInputChange(e, item.id)}
-                  />
-                </div>
-              ) : (
-                <div>loading ...</div>
-              )}
-
-              <div
-                className="flex-1 h-8 w-16 justify-center py-2 font-medium text-lg flex items-center bg-red-700 text-white rounded-3xl m-2 cursor-pointer hover:bg-red-800"
-                onClick={() => handleDelele(item.id)}
-              >
-                Xóa
-              </div>
-            </div>
-          );
-        })} */}
         {handleRenderCart()}
         <div>
           <h1 className="font-bold text-xl">

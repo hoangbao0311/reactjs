@@ -22,7 +22,7 @@ const User = () => {
       return;
     } else {
       try {
-        await axios.patch(`http://localhost:3004/user/${idLogin}`, {
+        await axios.patch(`https://frt6fs-3004.csb.app/user/${idLogin}`, {
           password: password,
         });
         navigate("/");

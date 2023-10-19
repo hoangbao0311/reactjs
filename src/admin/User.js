@@ -9,7 +9,7 @@ export const User = () => {
   const navigate = useNavigate();
 
   const getData = async () => {
-    const response = await axios.get("http://localhost:3004/user");
+    const response = await axios.get("https://frt6fs-3004.csb.app/user");
     if (response.status === 200) {
       setList(response.data);
       console.log(response.data);
@@ -28,7 +28,9 @@ export const User = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3004/user/${id}`);
+      const response = await axios.delete(
+        `https://frt6fs-3004.csb.app/user/${id}`
+      );
       if (response.status === 200) {
         console.log("User deleted successfully");
         getData();

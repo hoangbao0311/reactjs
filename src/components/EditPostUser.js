@@ -52,7 +52,7 @@ const EditPostUser = () => {
     try {
       // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
       if (imageChanged) {
-        await axios.patch(`http://localhost:3004/uploads/${id}`, {
+        await axios.patch(`https://frt6fs-3004.csb.app/uploads/${id}`, {
           title: title,
           content: content,
           image: baseImage,
@@ -60,7 +60,7 @@ const EditPostUser = () => {
         toast.success("Cập nhật thành công !");
         navigate("/user");
       } else {
-        await axios.patch(`http://localhost:3004/uploads/${id}`, {
+        await axios.patch(`https://frt6fs-3004.csb.app/uploads/${id}`, {
           title: title,
           content: content,
         });

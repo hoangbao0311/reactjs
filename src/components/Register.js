@@ -32,7 +32,7 @@ const Register = () => {
     let trueEmail = false;
 
     axios
-      .get("http://localhost:3004/user")
+      .get("https://frt6fs-3004.csb.app/user")
       .then((response) => {
         // Lặp qua từng đối tượng trong mảng data và lấy email và password
         // Kiểm tra có trùng email có trong data chưa
@@ -48,7 +48,7 @@ const Register = () => {
         // Đăng ký thành công khi thông tin không trùng
         if (trueEmail) {
           axios
-            .post("http://localhost:3004/user", data)
+            .post("https://frt6fs-3004.csb.app/user", data)
             .then((response) => {
               toast.success("Đăng ký thành công");
               localStorage.setItem("isLogin", data.email);
